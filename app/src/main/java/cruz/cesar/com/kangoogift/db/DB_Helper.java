@@ -10,10 +10,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DB_Helper extends SQLiteOpenHelper{
 
     public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "KabgooGift.lite";
 
 
-    public DB_Helper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DB_Helper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
