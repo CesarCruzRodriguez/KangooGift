@@ -1,9 +1,12 @@
 package cruz.cesar.com.kangoogift;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +18,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import cruz.cesar.com.kangoogift.db.DB_Helper;
+import cruz.cesar.com.kangoogift.fragments.EventoFragment;
+import cruz.cesar.com.kangoogift.fragments.InicioFragment;
 
 public class Principal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        InicioFragment.OnFragmentInteractionListener,
+        EventoFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,22 +96,67 @@ public class Principal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch (id) {
+            case R.id.inicio:
 
-        } else if (id == R.id.nav_slideshow) {
+                item.setChecked(true);
+                setFragment(0);
+                break;
+            case R.id.eventos:
 
-        } else if (id == R.id.nav_manage) {
+                item.setChecked(true);
+                setFragment(1);
+                break;
+            case R.id.nav_slideshow:
 
-        } else if (id == R.id.nav_share) {
+                break;
+            case R.id.nav_manage:
 
-        } else if (id == R.id.nav_send) {
+                break;
+            case R.id.nav_share:
 
+                break;
+            case R.id.nav_send:
+
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void setFragment(int pos){
+
+        FragmentManager fragmentManager;
+        FragmentTransaction fragmentTransaction;
+
+        switch (pos){
+            case 0:
+
+                fragmentManager = getSupportFragmentManager();
+                InicioFragment inicioFragment= new InicioFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.relativeLPrincipal, inicioFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                break;
+            case 1:
+
+                fragmentManager = getSupportFragmentManager();
+                EventoFragment eventoFragment= new EventoFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.relativeLPrincipal, eventoFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
