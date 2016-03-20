@@ -33,7 +33,7 @@ public class Principal extends AppCompatActivity
 
         DB_Helper dbHelper = new DB_Helper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
+        dbHelper.close();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -144,7 +144,7 @@ public class Principal extends AppCompatActivity
             case 1:
 
                 fragmentManager = getSupportFragmentManager();
-                EventoFragment eventoFragment= new EventoFragment();
+                EventoFragment eventoFragment= new EventoFragment(this);
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.relativeLPrincipal, eventoFragment);
                 fragmentTransaction.addToBackStack(null);

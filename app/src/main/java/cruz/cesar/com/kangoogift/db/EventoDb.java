@@ -19,7 +19,7 @@ public final class EventoDb {
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
-                    FeedEntry._ID + INCREMENTS_TYPE +COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_ID + INCREMENTS_TYPE +COMMA_SEP +
 //                    FeedEntry.COLUMN_NAME_ID + TEXT_TYPE + COMMA_SEP +
 //                    FeedEntry.COLUMN_NAME_PERSONA_ID + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_NOMBRE + TEXT_TYPE + COMMA_SEP +

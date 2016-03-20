@@ -1,15 +1,25 @@
 package cruz.cesar.com.kangoogift.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import cruz.cesar.com.kangoogift.EventoRecyclerAdapter;
 import cruz.cesar.com.kangoogift.R;
+import cruz.cesar.com.kangoogift.db.DB_Helper;
+import cruz.cesar.com.kangoogift.model.Evento;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,10 +29,20 @@ import cruz.cesar.com.kangoogift.R;
  */
 public class EventoFragment extends Fragment {
 
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    ArrayList<Evento> arrayList = new ArrayList<>();
+    Context ctx;
+
     private OnFragmentInteractionListener mListener;
 
-    public EventoFragment() {
-        // Required empty public constructor
+    public EventoFragment(){
+
+    }
+    public EventoFragment(Context ctx) {
+
+        this.ctx = ctx;
     }
 
 
@@ -33,6 +53,34 @@ public class EventoFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_evento, container, false);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Eventos");
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewEventos);
+        layoutManager = new LinearLayoutManager(ctx);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        DB_Helper db_helper = new DB_Helper(ctx);
+        SQLiteDatabase db = db_helper.getReadableDatabase();
+
+        Cursor cursor = db_helper.getEvenetoDatos(db);
+
+        cursor.moveToFirst();
+                do{
+
+                  Evento evento = new Evento(
+                          cursor.getInt(0),
+                          cursor.getString(1),
+                          cursor.getString(2),
+                          cursor.getString(3)
+                  );
+
+                    arrayList.add(evento);
+
+                }while (cursor.moveToNext());
+                db_helper.close();
+
+        adapter = new EventoRecyclerAdapter(arrayList);
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
