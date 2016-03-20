@@ -16,9 +16,9 @@ public class PersonaDb {
                     FeedEntry.COLUMN_NAME_EVENTO_ID +") REFERENCES " +
                     EventoDb.FeedEntry.TABLE_NAME +"("+ EventoDb.FeedEntry.COLUMN_NAME_ID +")";
 
-    public static final String RELACION_REGALO = "FOREIGN KEY("+
-            FeedEntry.COLUMN_NAME_REGALO_ID +") REFERENCES " +
-            RegaloDb.FeedEntry.TABLE_NAME +"("+ RegaloDb.FeedEntry.COLUMN_NAME_ID +")";
+//    public static final String RELACION_REGALO = "FOREIGN KEY("+
+//            FeedEntry.COLUMN_NAME_REGALO_ID +") REFERENCES " +
+//            RegaloDb.FeedEntry.TABLE_NAME +"("+ RegaloDb.FeedEntry.COLUMN_NAME_ID +")";
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
@@ -28,9 +28,9 @@ public class PersonaDb {
                     FeedEntry.COLUMN_NAME_REGALO_ID + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_NOMBRE + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_FECHA + DATE_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_COMENTARIO + TEXT_TYPE + COMMA_SEP +
-                    RELACION_EVENTO + COMMA_SEP +
-                    RELACION_REGALO +
+                    FeedEntry.COLUMN_NAME_COMENTARIO + TEXT_TYPE +
+                    COMMA_SEP + RELACION_EVENTO +
+//                    COMMA_SEP + RELACION_REGALO +
                     " )";
 
     public static final String SQL_DELETE_ENTRIES =
