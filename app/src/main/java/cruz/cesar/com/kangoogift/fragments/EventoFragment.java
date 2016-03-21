@@ -79,7 +79,7 @@ public class EventoFragment extends Fragment {
                 }while (cursor.moveToNext());
                 db_helper.close();
 
-        adapter = new EventoRecyclerAdapter(arrayList);
+        adapter = new EventoRecyclerAdapter(arrayList, ctx);
         recyclerView.setAdapter(adapter);
 
         return view;
