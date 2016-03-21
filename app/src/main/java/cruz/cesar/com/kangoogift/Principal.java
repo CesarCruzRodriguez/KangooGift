@@ -1,5 +1,6 @@
 package cruz.cesar.com.kangoogift;
 
+import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,10 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.fragments.EventoFragment;
 import cruz.cesar.com.kangoogift.fragments.InicioFragment;
+import cruz.cesar.com.kangoogift.listeners.AddEventoListener;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -83,7 +87,24 @@ public class Principal extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.add_evento) {
+
+            Dialog dialog = new Dialog(Principal.this);
+            dialog.setTitle(R.string.add_evento);
+            dialog.setContentView(R.layout.add_evento_customdialog_layout);
+            dialog.show();
+
+            EditText editTextNombre = (EditText)dialog.findViewById(R.id.nombre);
+            EditText editTextFecha = (EditText)dialog.findViewById(R.id.fecha);
+            EditText editTextComentario = (EditText)dialog.findViewById(R.id.comentario);
+
+            Button btnAddEvento = (Button)dialog.findViewById(R.id.btnAddEvento);
+
+            AddEventoListener eventoListener = new AddEventoListener(dialog, editTextNombre, editTextFecha, editTextComentario);
+
+            //manejador de insertar eventos en BD.
+            btnAddEvento.setOnClickListener(eventoListener);
+
             return true;
         }
 

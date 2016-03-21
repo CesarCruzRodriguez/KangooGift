@@ -15,6 +15,7 @@ public class EventoDetalle extends AppCompatActivity {
         setContentView(R.layout.activity_evento_detalle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        //cambiando cabecera con nombre del evento.
         toolbar.setTitle(getIntent().getStringExtra("nombre"));
         setSupportActionBar(toolbar);
 

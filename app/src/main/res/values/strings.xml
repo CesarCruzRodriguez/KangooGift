@@ -14,4 +14,9 @@
     <string name="inicio">inicio</string>
     <string name="title_activity_evento_detalles">EventoDetalles</string>
     <string name="title_activity_evento_detalle">EventoDetalle</string>
+    <string name="add_evento">add_evento</string>
+    <string name="nombre">nombre</string>
+    <string name="comentario">comentario</string>
+    <string name="fecha">fecha</string>
+    <string name="Añadir">Añadir</string>
 </resources>
