@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -97,6 +98,20 @@ public class Principal extends AppCompatActivity
             EditText editTextNombre = (EditText)dialog.findViewById(R.id.nombre);
             EditText editTextFecha = (EditText)dialog.findViewById(R.id.fecha);
             EditText editTextComentario = (EditText)dialog.findViewById(R.id.comentario);
+
+            //el datepicker para pillar la fecha
+            editTextFecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(hasFocus){
+                        DialogFragment fechaDialog = new FechaDialog(v);
+
+                        fechaDialog.show(getSupportFragmentManager(), "DatePicker");
+
+
+                    }
+                }
+            });
 
             Button btnAddEvento = (Button)dialog.findViewById(R.id.btnAddEvento);
 
