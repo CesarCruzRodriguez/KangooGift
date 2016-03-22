@@ -121,7 +121,7 @@ public class Principal extends AppCompatActivity
             FragmentManager fragmentManager;
             fragmentManager = getSupportFragmentManager();
 
-            AddEventoListener eventoListener = new AddEventoListener(Principal.this, fragmentManager , dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
+            AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLPrincipal,Principal.this, fragmentManager , dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
 
 
 

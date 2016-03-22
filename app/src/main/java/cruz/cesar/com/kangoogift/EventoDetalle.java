@@ -1,11 +1,14 @@
 package cruz.cesar.com.kangoogift;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,17 +16,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.fragments.EventoFragment;
+import cruz.cesar.com.kangoogift.listeners.AddEventoListener;
 
 public class EventoDetalle extends AppCompatActivity implements EventoFragment.OnFragmentInteractionListener{
+
+    Toolbar toolbar;
+    DB_Helper dbHelper;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         //cambiando cabecera con nombre del evento.
         toolbar.setTitle(getIntent().getStringExtra("nombre"));
@@ -73,8 +83,6 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         //BORRAR EVENTO//
                         /////////////////
 
-                        DB_Helper dbHelper;
-                        SQLiteDatabase db;
                         dbHelper = new DB_Helper(EventoDetalle.this);
                         db = dbHelper.getWritableDatabase();
                         int idEvento = getIntent().getIntExtra("id", 1000);
@@ -95,6 +103,14 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         fragmentTransaction.commit();
 
 
+                        /////////////////////////
+                        //CAMBIANDO EL TOOLBAR///
+                        /////////////////////////
+
+                        toolbar.getMenu().clear();
+                        getMenuInflater().inflate(R.menu.evento_detalle_eventos_toolbar_items, toolbar.getMenu());
+
+
                     }
                 });
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -109,6 +125,46 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                 dialog.show();
 
                 break;
+
+            case R.id.add_evento:
+
+                Dialog dialogA = new Dialog(EventoDetalle.this);
+                dialogA.setTitle(R.string.add_evento);
+                dialogA.setContentView(R.layout.add_evento_customdialog_layout);
+                dialogA.show();
+
+                EditText editTextNombre = (EditText)dialogA.findViewById(R.id.nombre);
+                EditText editTextFecha = (EditText)dialogA.findViewById(R.id.fecha);
+                EditText editTextComentario = (EditText)dialogA.findViewById(R.id.comentario);
+
+                //el datepicker para pillar la fecha
+                editTextFecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if(hasFocus){
+                            DialogFragment fechaDialog = new FechaDialog(v);
+
+                            fechaDialog.show(getSupportFragmentManager(), "DatePicker");
+
+
+                        }
+                    }
+                });
+
+                Button btnAddEvento = (Button)dialogA.findViewById(R.id.btnAddEvento);
+
+                FragmentManager fragmentManager;
+                fragmentManager = getSupportFragmentManager();
+
+                AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManager , dialogA, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
+
+
+
+                //manejador de insertar eventos en BD.
+                btnAddEvento.setOnClickListener(eventoListener);
+
+                return true;
+
             default:
                 break;
         }
