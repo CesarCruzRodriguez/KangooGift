@@ -31,14 +31,17 @@ public class Principal extends AppCompatActivity
         InicioFragment.OnFragmentInteractionListener,
         EventoFragment.OnFragmentInteractionListener{
 
+    DB_Helper dbHelper;
+    SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        DB_Helper dbHelper = new DB_Helper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        dbHelper.close();
+        dbHelper = new DB_Helper(this);
+        db = dbHelper.getWritableDatabase();
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -115,7 +118,12 @@ public class Principal extends AppCompatActivity
 
             Button btnAddEvento = (Button)dialog.findViewById(R.id.btnAddEvento);
 
-            AddEventoListener eventoListener = new AddEventoListener(dialog, editTextNombre, editTextFecha, editTextComentario);
+            FragmentManager fragmentManager;
+            fragmentManager = getSupportFragmentManager();
+
+            AddEventoListener eventoListener = new AddEventoListener(Principal.this, fragmentManager , dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
+
+
 
             //manejador de insertar eventos en BD.
             btnAddEvento.setOnClickListener(eventoListener);

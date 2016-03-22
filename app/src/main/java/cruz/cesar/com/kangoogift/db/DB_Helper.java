@@ -59,6 +59,26 @@ public class DB_Helper extends SQLiteOpenHelper{
         }
     }
 
+    public void insertarEvento(String nombre, String fecha, String comentario, SQLiteDatabase db){
+
+        db.beginTransaction();
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(EventoDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
+            values.put(EventoDb.FeedEntry.COLUMN_NAME_FECHA, fecha);
+            values.put(EventoDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
+            long l =  db.insert(EventoDb.FeedEntry.TABLE_NAME, null, values);
+
+            Log.d("Database operaciion", "Una fila insertada...");
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+    }
+
     public Cursor getEvenetoDatos(SQLiteDatabase db){
 
         String[] projection = {EventoDb.FeedEntry.COLUMN_NAME_ID,
