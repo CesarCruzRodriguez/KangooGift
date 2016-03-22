@@ -12,10 +12,10 @@
     tools:context="cruz.cesar.com.kangoogift.EventoDetalle"
     tools:showIn="@layout/activity_evento_detalle">
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/relativeLEventoDetalle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Activity de evento detalle"/>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

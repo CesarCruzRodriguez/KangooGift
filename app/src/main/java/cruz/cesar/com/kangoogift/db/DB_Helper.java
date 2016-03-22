@@ -42,6 +42,10 @@ public class DB_Helper extends SQLiteOpenHelper{
 
     }
 
+    //////////////////////
+    //MÉTODOS DE EVENTOS//
+    /////////////////////
+
     public void insertarEventoCumpleaños(String nombre, String comentario, SQLiteDatabase db){
 
         db.beginTransaction();
@@ -77,6 +81,19 @@ public class DB_Helper extends SQLiteOpenHelper{
             db.endTransaction();
         }
 
+    }
+
+    ////////////////
+    //BORRAR////////
+    ////////////////
+
+    public void borrarEvento(String id, SQLiteDatabase db){
+
+        String selection = EventoDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+
+        String[] valor = { String.valueOf(id) };
+
+        db.delete(EventoDb.FeedEntry.TABLE_NAME, selection, valor);
     }
 
     public Cursor getEvenetoDatos(SQLiteDatabase db){

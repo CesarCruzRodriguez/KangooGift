@@ -19,4 +19,8 @@
     <string name="comentario">comentario</string>
     <string name="fecha">fecha</string>
     <string name="Añadir">Añadir</string>
+    <string name="confirmarBorrarEvento">¿Desea borrar el evento?</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="borrar_evento">Borrar Evento</string>
 </resources>
