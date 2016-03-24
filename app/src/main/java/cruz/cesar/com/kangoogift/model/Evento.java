@@ -11,7 +11,6 @@ public class Evento {
     private String fecha;
     private String comentario;
 
-
     public Evento(int id, String nombre, String fecha, String comentario) {
         this.id = id;
         this.nombre = nombre;

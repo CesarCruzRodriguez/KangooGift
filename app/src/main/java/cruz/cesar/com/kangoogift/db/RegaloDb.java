@@ -8,6 +8,7 @@ import android.provider.BaseColumns;
 public class RegaloDb {
 
     public static final String INCREMENTS_TYPE = " INTEGER PRIMARY KEY AUTOINCREMENT";
+    public static final String INT_TYPE = " INTEGER";
     public static final String TEXT_TYPE = " TEXT";
     public static final String COMMA_SEP = ",";
 
@@ -18,7 +19,7 @@ public class RegaloDb {
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                     FeedEntry.COLUMN_NAME_ID + INCREMENTS_TYPE +COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_PERSONA_ID + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_PERSONA_ID + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_NOMBRE + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_ESTADO + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_COMENTARIO + TEXT_TYPE + COMMA_SEP +
