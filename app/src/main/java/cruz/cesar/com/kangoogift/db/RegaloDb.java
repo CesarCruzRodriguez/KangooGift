@@ -37,7 +37,7 @@ public class RegaloDb {
     public static abstract class FeedEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "regalos";
-        public static final String COLUMN_NAME_ID = "regalo_id";
+        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_PERSONA_ID = "persona_id";
         public static final String COLUMN_NAME_NOMBRE = "nombre";
         public static final String COLUMN_NAME_ESTADO = "estado";

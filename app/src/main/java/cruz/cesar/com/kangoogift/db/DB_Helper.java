@@ -26,8 +26,13 @@ public class DB_Helper extends SQLiteOpenHelper{
         db.execSQL(PersonaDb.SQL_CREATE_ENTRIES);
         db.execSQL(RegaloDb.SQL_CREATE_ENTRIES);
 
+        //BASES DE DATOS DE PRUEBA.......................................................
+
         insertarEventoCumpleaños("Cumpleaños", "... comentario ...", db);
         insertarEventoCumpleaños("Navidad", "Este año es en la casa de mi Tia ...", db);
+
+        insertarPersona("1", "Pepe", "22-12-2016", "mi tio", db);
+        insertarPersona("1", "Juana", "21-12-2016", "mi tia", db);
 
     }
 
@@ -104,6 +109,55 @@ public class DB_Helper extends SQLiteOpenHelper{
                                 EventoDb.FeedEntry.COLUMN_NAME_COMENTARIO};
 
         Cursor cursor = db.query(EventoDb.FeedEntry.TABLE_NAME, projection, null,null, null, null, null);
+
+        return cursor;
+    }
+
+    //////////////////////
+    //METODOS PERSONAS////
+    //////////////////////
+
+    public void insertarPersona(String evento_id, String nombre,  String fecha, String comentario, SQLiteDatabase db){
+
+        db.beginTransaction();
+
+        //TIPO INT EN BASE DE DATOS.................................................................
+        int numeroEvento_id = Integer.parseInt(evento_id);
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(PersonaDb.FeedEntry.COLUMN_NAME_EVENTO_ID, numeroEvento_id);
+            values.put(PersonaDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
+            values.put(PersonaDb.FeedEntry.COLUMN_NAME_FECHA, fecha);
+            values.put(PersonaDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
+            long l =  db.insert(PersonaDb.FeedEntry.TABLE_NAME, null, values);
+
+            Log.d("Database operaciion", "Una fila insertada...");
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public Cursor getPersonaWhereEvento_id(SQLiteDatabase db, int evento_id){
+
+        String ev_id = String.valueOf(evento_id);
+
+        Cursor cursor = db.rawQuery("SELECT * FROM personas WHERE evento_id like " + ev_id , null);
+
+        return cursor;
+    }
+
+    public Cursor getPersonaDatos(SQLiteDatabase db){
+
+        String[] projection = {PersonaDb.FeedEntry.COLUMN_NAME_ID,
+                PersonaDb.FeedEntry.COLUMN_NAME_EVENTO_ID,
+                PersonaDb.FeedEntry.COLUMN_NAME_NOMBRE,
+                PersonaDb.FeedEntry.COLUMN_NAME_FECHA,
+                PersonaDb.FeedEntry.COLUMN_NAME_COMENTARIO};
+
+        Cursor cursor = db.query(PersonaDb.FeedEntry.TABLE_NAME, projection, null,null, null, null, null);
 
         return cursor;
     }

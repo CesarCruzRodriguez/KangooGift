@@ -8,10 +8,23 @@
     tools:context="cruz.cesar.com.kangoogift.EventoDetalle"
     tools:showIn="@layout/activity_evento_detalle">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/relativeLEventoDetalle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerViewPersonas">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

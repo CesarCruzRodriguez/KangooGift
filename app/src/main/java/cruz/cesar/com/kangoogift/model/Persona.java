@@ -11,7 +11,7 @@ public class Persona {
     private String fecha;
     private String comentario;
 
-    public Persona(String comentario, int evento_id, String fecha, int id, String nombre) {
+    public Persona(int id, int evento_id, String nombre, String fecha, String comentario) {
         this.comentario = comentario;
         this.evento_id = evento_id;
         this.fecha = fecha;

@@ -44,7 +44,7 @@ public class PersonaDb {
     public static abstract class FeedEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "personas";
-        public static final String COLUMN_NAME_ID = "persona_id";
+        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_EVENTO_ID = "evento_id";
 //        public static final String COLUMN_NAME_REGALO_ID = "regalo_id";
         public static final String COLUMN_NAME_NOMBRE = "nombre";

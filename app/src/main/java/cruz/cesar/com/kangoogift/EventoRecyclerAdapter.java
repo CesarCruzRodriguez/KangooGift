@@ -32,7 +32,7 @@ public class EventoRecyclerAdapter extends RecyclerView.Adapter<EventoRecyclerAd
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.eventos_row_layout, parent, false);
         RecyclerViewHolder recyclerViewHolder= new RecyclerViewHolder(view, ctx, eventos);
 
         return recyclerViewHolder;
@@ -58,8 +58,6 @@ public class EventoRecyclerAdapter extends RecyclerView.Adapter<EventoRecyclerAd
         public ArrayList<Evento> eventos = new ArrayList<>();
         public Context ctx;
 
-        FragmentManager fragmentManager;
-        FragmentTransaction fragmentTransaction;
 
         public RecyclerViewHolder(View view, Context ctx, ArrayList<Evento> eventos){
             super(view);

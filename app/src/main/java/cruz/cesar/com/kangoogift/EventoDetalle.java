@@ -2,6 +2,7 @@ package cruz.cesar.com.kangoogift;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,22 +13,33 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.fragments.EventoFragment;
 import cruz.cesar.com.kangoogift.listeners.AddEventoListener;
+import cruz.cesar.com.kangoogift.model.Persona;
 
 public class EventoDetalle extends AppCompatActivity implements EventoFragment.OnFragmentInteractionListener{
 
     Toolbar toolbar;
     DB_Helper dbHelper;
     SQLiteDatabase db;
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    ArrayList<Persona> arrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,44 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
         toolbar.setTitle(getIntent().getStringExtra("nombre"));
         setSupportActionBar(toolbar);
 
+        /////////////////////////
+        //RECYCLERVIEW PERSONAS//
+        /////////////////////////
+
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewPersonas);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        DB_Helper db_helper = new DB_Helper(this);
+        SQLiteDatabase db = db_helper.getReadableDatabase();
+
+//       Cursor cursor = db_helper.getPersonaDatos(db);
+        Cursor cursor = db_helper.getPersonaWhereEvento_id(db, getIntent().getIntExtra("id", 1));
+
+
+        if(cursor.moveToFirst()) {
+            do {
+
+                Persona evento = new Persona(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4)
+                );
+
+                arrayList.add(evento);
+
+            } while (cursor.moveToNext());
+            db_helper.close();
+
+            adapter = new PersonaRecyclerAdapter(arrayList, this);
+            recyclerView.setAdapter(adapter);
+        }
+        else{
+            Log.d("Cursor.moveToFirst " , "El cursor estaba vacío" );
+        }
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
