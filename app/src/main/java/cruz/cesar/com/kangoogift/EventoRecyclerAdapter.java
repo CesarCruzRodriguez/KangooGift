@@ -43,6 +43,7 @@ public class EventoRecyclerAdapter extends RecyclerView.Adapter<EventoRecyclerAd
 
         Evento evento = eventos.get(position);
         holder.Nombre.setText(evento.getNombre());
+        holder.Fecha.setText(evento.getFecha());
         holder.Comentario.setText(evento.getComentario());
 
     }
@@ -54,7 +55,7 @@ public class EventoRecyclerAdapter extends RecyclerView.Adapter<EventoRecyclerAd
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView Nombre, Comentario;
+        public TextView Nombre, Fecha, Comentario;
         public ArrayList<Evento> eventos = new ArrayList<>();
         public Context ctx;
 
@@ -68,6 +69,7 @@ public class EventoRecyclerAdapter extends RecyclerView.Adapter<EventoRecyclerAd
             //metodo click en los CardsView de la lista de eventos
             view.setOnClickListener(this);
 
+            Fecha = (TextView)view.findViewById(R.id.fecha);
             Nombre = (TextView)view.findViewById(R.id.nombre);
             Comentario = (TextView)view.findViewById(R.id.comentario);
 

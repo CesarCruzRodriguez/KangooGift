@@ -23,4 +23,5 @@
     <string name="eliminar">Eliminar</string>
     <string name="cancel">Cancelar</string>
     <string name="borrar_evento">Borrar Evento</string>
+    <string name="title_activity_persona_detalle">PersonaDetalle</string>
 </resources>

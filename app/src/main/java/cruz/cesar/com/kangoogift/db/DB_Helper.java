@@ -29,7 +29,8 @@ public class DB_Helper extends SQLiteOpenHelper{
         //BASES DE DATOS DE PRUEBA.......................................................
 
         insertarEventoCumpleaños("Cumpleaños", "... comentario ...", db);
-        insertarEventoCumpleaños("Navidad", "Este año es en la casa de mi Tia ...", db);
+        insertarEvento("Navidad", "25-12-2016", "Este año es en casa de mi tía.", db);
+//        insertarEventoCumpleaños("Navidad", "Este año es en la casa de mi Tia ...", db);
 
         insertarPersona("1", "Pepe", "22-12-2016", "mi tio", db);
         insertarPersona("1", "Juana", "21-12-2016", "mi tia", db);

@@ -1,7 +1,9 @@
 package cruz.cesar.com.kangoogift;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class PersonaRecyclerAdapter extends RecyclerView.Adapter<PersonaRecycler
     }
 
     @Override
-    public void onBindViewHolder(PersonaRecyclerAdapter.RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerViewHolder holder, int position)  {
 
         Persona persona = personas.get(position);
         holder.Nombre.setText(persona.getNombre());
@@ -48,7 +50,7 @@ public class PersonaRecyclerAdapter extends RecyclerView.Adapter<PersonaRecycler
         return personas.size();
     }
 
-    public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
+    public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView Nombre, Fecha, Comentario;
         public ArrayList<Persona> personas = new ArrayList<>();
@@ -59,9 +61,26 @@ public class PersonaRecyclerAdapter extends RecyclerView.Adapter<PersonaRecycler
             this.ctx = ctx;
             this.personas = personas;
 
+            view.setOnClickListener(this);
             Nombre = (TextView) view.findViewById(R.id.nombre);
             Fecha = (TextView) view.findViewById(R.id.fecha);
             Comentario = (TextView) view.findViewById(R.id.comentario);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Log.d("click persona", "persona click");
+
+            int position = getAdapterPosition();
+            Persona persona = this.personas.get(position);
+
+            Intent intent = new Intent(this.ctx, PersonaDetalle.class);
+            intent.putExtra("id", persona.getId());
+            intent.putExtra("nombre", persona.getNombre());
+            intent.putExtra("fecha", persona.getFecha());
+            intent.putExtra("comentario", persona.getComentario());
+            this.ctx.startActivity(intent);
         }
     }
 }

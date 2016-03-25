@@ -21,6 +21,10 @@
         <activity
             android:name=".EventoDetalle"
             android:label="@string/title_activity_evento_detalle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PersonaDetalle"
+            android:label="@string/title_activity_persona_detalle"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
