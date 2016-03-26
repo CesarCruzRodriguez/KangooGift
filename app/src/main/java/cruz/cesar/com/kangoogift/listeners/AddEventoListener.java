@@ -2,6 +2,7 @@ package cruz.cesar.com.kangoogift.listeners;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import cruz.cesar.com.kangoogift.Principal;
 import cruz.cesar.com.kangoogift.R;
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.fragments.EventoFragment;
@@ -28,6 +30,17 @@ public class AddEventoListener implements View.OnClickListener {
     EditText etComentario;
     SQLiteDatabase db;
     DB_Helper db_helper;
+
+    public  AddEventoListener(Context ctx, Dialog dialog, EditText etNombre, EditText etFecha, EditText etComentario, SQLiteDatabase db, DB_Helper db_helper){
+
+        this.ctx =ctx;
+        this.dialog = dialog;
+        this.etNombre = etNombre;
+        this.etFecha = etFecha;
+        this.etComentario = etComentario;
+        this.db = db;
+        this.db_helper = db_helper;
+    }
 
     public AddEventoListener(int plantilla, Context ctx ,FragmentManager fragmentManager , Dialog dialog, EditText etNombre, EditText etFecha, EditText etComentario, SQLiteDatabase db, DB_Helper db_helper) {
 
@@ -49,16 +62,18 @@ public class AddEventoListener implements View.OnClickListener {
 
         dialog.dismiss();
 
-        FragmentTransaction fragmentTransaction;
+        Intent intent = new Intent(ctx, Principal.class);
+        intent.putExtra("nombre", "Eventos");
+        ctx.startActivity(intent);
 
+//        FragmentTransaction fragmentTransaction;
+//        EventoFragment eventoFragment= new EventoFragment(ctx);
+//        fragmentTransaction = this.fragmentManager.beginTransaction();
+//        fragmentTransaction.add(plantilla, eventoFragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
 
-        EventoFragment eventoFragment= new EventoFragment(ctx);
-        fragmentTransaction = this.fragmentManager.beginTransaction();
-        fragmentTransaction.add(plantilla, eventoFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-
-        Log.d("AddEventoListener","Insertando datos en la base de datos... " + etNombre.getText());
+        Log.d("AddEventoListener", "Insertando datos en la base de datos... " + etNombre.getText());
 
 
     }

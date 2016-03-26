@@ -29,6 +29,17 @@ public class EditEventoListener implements View.OnClickListener {
     DB_Helper db_helper;
     int id;
 
+    public EditEventoListener(Context ctx, Dialog dialog, EditText etNombre, EditText etFecha, EditText etComentario, DB_Helper db_helper, SQLiteDatabase db, int id) {
+        this.ctx = ctx;
+        this.dialog = dialog;
+        this.db = db;
+        this.db_helper = db_helper;
+        this.etFecha = etFecha;
+        this.etNombre = etNombre;
+        this.etComentario = etComentario;
+        this.id = id;
+    }
+
     public EditEventoListener(int plantilla, Context ctx, FragmentManager fragmentManager, Dialog dialog,EditText etNombre, EditText etFecha, EditText etComentario, SQLiteDatabase db, DB_Helper db_helper, int id) {
 
         this.plantilla = plantilla;
@@ -54,12 +65,12 @@ public class EditEventoListener implements View.OnClickListener {
 
         dialog.dismiss();
 
-        Intent intent = new Intent(this.ctx, EventoDetalle.class);
+        Intent intent = new Intent(ctx, EventoDetalle.class);
         intent.putExtra("id", id);
         intent.putExtra("nombre",  etNombre.getText().toString());
         intent.putExtra("fecha",  etFecha.getText().toString());
         intent.putExtra("comentario", etComentario.getText().toString());
-        this.ctx.startActivity(intent);
+        ctx.startActivity(intent);
 
 //        FragmentTransaction fragmentTransaction;
 //

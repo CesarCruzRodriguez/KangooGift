@@ -1,6 +1,8 @@
 package cruz.cesar.com.kangoogift;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +25,23 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.fragments.EventoFragment;
 import cruz.cesar.com.kangoogift.fragments.InicioFragment;
 import cruz.cesar.com.kangoogift.listeners.AddEventoListener;
+import cruz.cesar.com.kangoogift.model.Evento;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         InicioFragment.OnFragmentInteractionListener,
         EventoFragment.OnFragmentInteractionListener{
+
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter adapter;
+    ArrayList<Evento> arrayList = new ArrayList<>();
 
     DB_Helper dbHelper;
     SQLiteDatabase db;
@@ -42,10 +54,35 @@ public class Principal extends AppCompatActivity
         dbHelper = new DB_Helper(this);
         db = dbHelper.getWritableDatabase();
 
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewEventos);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        Cursor cursor = dbHelper.getEvenetoDatos(db);
+
+        cursor.moveToFirst();
+        do{
+
+            Evento evento = new Evento(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3)
+            );
+
+            arrayList.add(evento);
+
+        }while (cursor.moveToNext());
+        cursor.close();
+
+        adapter = new EventoRecyclerAdapter(arrayList, this);
+        recyclerView.setAdapter(adapter);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +155,11 @@ public class Principal extends AppCompatActivity
 
             Button btnAddEvento = (Button)dialog.findViewById(R.id.btnAddEvento);
 
-            FragmentManager fragmentManager;
-            fragmentManager = getSupportFragmentManager();
-
-            AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLPrincipal,Principal.this, fragmentManager , dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
+//            FragmentManager fragmentManager;
+//            fragmentManager = getSupportFragmentManager();
+//
+//            AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLPrincipal,Principal.this, fragmentManager , dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
+            AddEventoListener eventoListener = new AddEventoListener(this,dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
 
 
 
@@ -178,22 +216,26 @@ public class Principal extends AppCompatActivity
         switch (pos){
             case 0:
 
-                fragmentManager = getSupportFragmentManager();
-                EventoFragment eventoFragment= new EventoFragment(this);
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.relativeLPrincipal, eventoFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Intent intent = new Intent(this, Principal.class);
+                intent.putExtra("nombre", "Eventos");
+                startActivity(intent);
+
+//                fragmentManager = getSupportFragmentManager();
+//                EventoFragment eventoFragment= new EventoFragment(this);
+//                fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.add(R.id.relativeLPrincipal, eventoFragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
                 break;
 
             case 1:
 
-                fragmentManager = getSupportFragmentManager();
-                InicioFragment inicioFragment= new InicioFragment();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.relativeLPrincipal, inicioFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                fragmentManager = getSupportFragmentManager();
+//                InicioFragment inicioFragment= new InicioFragment();
+//                fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.add(R.id.relativeLPrincipal, inicioFragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
                 break;
 
             default:

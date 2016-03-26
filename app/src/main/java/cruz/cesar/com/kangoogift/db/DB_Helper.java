@@ -72,9 +72,9 @@ public class DB_Helper extends SQLiteOpenHelper{
 
     public void insertarEvento(String nombre, String fecha, String comentario, SQLiteDatabase db){
 
-        db.beginTransaction();
-
-        try {
+//        db.beginTransaction();
+//
+//        try {
             ContentValues values = new ContentValues();
             values.put(EventoDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
             values.put(EventoDb.FeedEntry.COLUMN_NAME_FECHA, fecha);
@@ -82,18 +82,18 @@ public class DB_Helper extends SQLiteOpenHelper{
             long l =  db.insert(EventoDb.FeedEntry.TABLE_NAME, null, values);
 
             Log.d("Database operaciion", "Una fila insertada...");
-
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
+//
+//            db.setTransactionSuccessful();
+//        } finally {
+//            db.endTransaction();
+//        }
 
 
     }
 
     public void actualizarEvento(int id, String nombre, String fecha, String comentario, SQLiteDatabase db){
 
-        db.beginTransaction();
+//        db.beginTransaction();
 
         String selection = EventoDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
         String[] selectionArgs = { String.valueOf(id) };
@@ -118,13 +118,13 @@ public class DB_Helper extends SQLiteOpenHelper{
 
         String[] valor = { String.valueOf(id) };
 
-        try{
+//        try{
             db.delete(EventoDb.FeedEntry.TABLE_NAME, selection, valor);
             Log.d("Database operaciion", "Una fila borrada...");
-            db.setTransactionSuccessful();
-        }finally {
-            db.endTransaction();
-        }
+//            db.setTransactionSuccessful();
+//        }finally {
+//            db.endTransaction();
+//        }
 
 
     }
@@ -147,12 +147,12 @@ public class DB_Helper extends SQLiteOpenHelper{
 
     public void insertarPersona(String evento_id, String nombre,  String fecha, String comentario, SQLiteDatabase db){
 
-        db.beginTransaction();
+//        db.beginTransaction();
 
         //TIPO INT EN BASE DE DATOS.................................................................
         int numeroEvento_id = Integer.parseInt(evento_id);
 
-        try {
+//        try {
             ContentValues values = new ContentValues();
             values.put(PersonaDb.FeedEntry.COLUMN_NAME_EVENTO_ID, numeroEvento_id);
             values.put(PersonaDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
@@ -162,10 +162,10 @@ public class DB_Helper extends SQLiteOpenHelper{
 
             Log.d("Database operaciion", "Una fila insertada...");
 
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
+//            db.setTransactionSuccessful();
+//        } finally {
+//            db.endTransaction();
+//        }
     }
 
     public Cursor getPersonaWhereEvento_id(SQLiteDatabase db, int evento_id){

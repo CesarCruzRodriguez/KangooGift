@@ -3,7 +3,6 @@ package cruz.cesar.com.kangoogift.fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,12 +20,7 @@ import cruz.cesar.com.kangoogift.R;
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.model.Evento;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link EventoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
+
 public class EventoFragment extends Fragment {
 
     RecyclerView recyclerView;
@@ -61,7 +55,7 @@ public class EventoFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         DB_Helper dbHelper = new DB_Helper(ctx);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         Cursor cursor = dbHelper.getEvenetoDatos(db);
 
@@ -78,7 +72,7 @@ public class EventoFragment extends Fragment {
                     arrayList.add(evento);
 
                 }while (cursor.moveToNext());
-                dbHelper.close();
+                cursor.close();
 
         adapter = new EventoRecyclerAdapter(arrayList, ctx);
         recyclerView.setAdapter(adapter);

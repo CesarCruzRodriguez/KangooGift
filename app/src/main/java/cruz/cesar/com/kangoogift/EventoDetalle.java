@@ -2,6 +2,7 @@ package cruz.cesar.com.kangoogift;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -145,17 +146,25 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         dbHelper.borrarEvento(stringId, db);
 
                         //////////////////////////////////////
+                        //SE REDIRIGE A ACTIVYITY DE EVENTOS//
+                        //////////////////////////////////////
+
+                        Intent intent = new Intent(EventoDetalle.this, Principal.class);
+                        intent.putExtra("nombre", "Eventos");
+                        EventoDetalle.this.startActivity(intent);
+
+                        //////////////////////////////////////
                         //SE REDIRIGE AL FRAGMENT DE EVENTOS//
                         //////////////////////////////////////
 
-                        FragmentTransaction fragmentTransaction;
-                        android.support.v4.app.FragmentManager fragmentManager;
-                        fragmentManager = getSupportFragmentManager();
-                        EventoFragment eventoFragment= new EventoFragment(EventoDetalle.this);
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.add(R.id.relativeLEventoDetalle, eventoFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
+//                        FragmentTransaction fragmentTransaction;
+//                        android.support.v4.app.FragmentManager fragmentManager;
+//                        fragmentManager = getSupportFragmentManager();
+//                        EventoFragment eventoFragment= new EventoFragment(EventoDetalle.this);
+//                        fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.add(R.id.relativeLEventoDetalle, eventoFragment);
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
 
 
                         /////////////////////////
@@ -217,11 +226,13 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
                 Button btnEditEvento = (Button)dialogB.findViewById(R.id.btnEditEvento);
 
-                FragmentManager fragmentManagerB;
-                fragmentManagerB = getSupportFragmentManager();
+//                FragmentManager fragmentManagerB;
+//                fragmentManagerB = getSupportFragmentManager();
+//
+//                EditEventoListener editEventoListener = new EditEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManagerB , dialogB,
+//                        editTextNombreB, editTextFechaB, editTextComentarioB, dbEDIT, dbHelperEDIT, idEvento);
 
-                EditEventoListener editEventoListener = new EditEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManagerB , dialogB,
-                        editTextNombreB, editTextFechaB, editTextComentarioB, dbEDIT, dbHelperEDIT, idEvento);
+                EditEventoListener editEventoListener = new EditEventoListener(EventoDetalle.this, dialogB, editTextNombreB, editTextFechaB, editTextComentarioB, dbHelperEDIT, dbEDIT, idEvento);
 
                 btnEditEvento.setOnClickListener(editEventoListener);
 
@@ -257,13 +268,13 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
                 Button btnAddEvento = (Button)dialogA.findViewById(R.id.btnAddEvento);
 
-                FragmentManager fragmentManager;
-                fragmentManager = getSupportFragmentManager();
+//                FragmentManager fragmentManager;
+//                fragmentManager = getSupportFragmentManager();
+//
+//                AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManager , dialogA,
+//                        editTextNombre, editTextFecha, editTextComentario, dbADD, dbHelperADD);
 
-                AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManager , dialogA,
-                        editTextNombre, editTextFecha, editTextComentario, dbADD, dbHelperADD);
-
-
+                AddEventoListener eventoListener = new AddEventoListener(EventoDetalle.this, dialogA, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
 
                 //manejador de insertar eventos en BD.
                 btnAddEvento.setOnClickListener(eventoListener);
