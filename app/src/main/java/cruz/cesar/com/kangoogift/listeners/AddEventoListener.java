@@ -29,7 +29,7 @@ public class AddEventoListener implements View.OnClickListener {
     SQLiteDatabase db;
     DB_Helper db_helper;
 
-    public AddEventoListener(int plantilla,Context ctx ,FragmentManager fragmentManager , Dialog dialog, EditText etNombre, EditText etFecha, EditText etComentario, SQLiteDatabase db, DB_Helper db_helper) {
+    public AddEventoListener(int plantilla, Context ctx ,FragmentManager fragmentManager , Dialog dialog, EditText etNombre, EditText etFecha, EditText etComentario, SQLiteDatabase db, DB_Helper db_helper) {
 
         this.plantilla = plantilla;
         this.ctx =ctx;

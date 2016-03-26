@@ -43,6 +43,7 @@ public class EventoFragment extends Fragment {
     public EventoFragment(Context ctx) {
 
         this.ctx = ctx;
+
     }
 
 
@@ -59,10 +60,10 @@ public class EventoFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        DB_Helper db_helper = new DB_Helper(ctx);
-        SQLiteDatabase db = db_helper.getReadableDatabase();
+        DB_Helper dbHelper = new DB_Helper(ctx);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db_helper.getEvenetoDatos(db);
+        Cursor cursor = dbHelper.getEvenetoDatos(db);
 
         cursor.moveToFirst();
                 do{
@@ -77,7 +78,7 @@ public class EventoFragment extends Fragment {
                     arrayList.add(evento);
 
                 }while (cursor.moveToNext());
-                db_helper.close();
+                dbHelper.close();
 
         adapter = new EventoRecyclerAdapter(arrayList, ctx);
         recyclerView.setAdapter(adapter);

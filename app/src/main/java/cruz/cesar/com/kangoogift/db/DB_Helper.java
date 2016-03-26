@@ -67,6 +67,7 @@ public class DB_Helper extends SQLiteOpenHelper{
         } finally {
             db.endTransaction();
         }
+
     }
 
     public void insertarEvento(String nombre, String fecha, String comentario, SQLiteDatabase db){
@@ -87,6 +88,24 @@ public class DB_Helper extends SQLiteOpenHelper{
             db.endTransaction();
         }
 
+
+    }
+
+    public void actualizarEvento(int id, String nombre, String fecha, String comentario, SQLiteDatabase db){
+
+        db.beginTransaction();
+
+        String selection = EventoDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+            ContentValues values = new ContentValues();
+            values.put(EventoDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
+            values.put(EventoDb.FeedEntry.COLUMN_NAME_FECHA, fecha);
+            values.put(EventoDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
+            long l =  db.update(EventoDb.FeedEntry.TABLE_NAME, values, selection, selectionArgs);
+
+            Log.d("Database operaciion", "Una fila actualizada...");
+
     }
 
     ////////////////
@@ -99,7 +118,15 @@ public class DB_Helper extends SQLiteOpenHelper{
 
         String[] valor = { String.valueOf(id) };
 
-        db.delete(EventoDb.FeedEntry.TABLE_NAME, selection, valor);
+        try{
+            db.delete(EventoDb.FeedEntry.TABLE_NAME, selection, valor);
+            Log.d("Database operaciion", "Una fila borrada...");
+            db.setTransactionSuccessful();
+        }finally {
+            db.endTransaction();
+        }
+
+
     }
 
     public Cursor getEvenetoDatos(SQLiteDatabase db){

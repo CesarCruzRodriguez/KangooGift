@@ -28,11 +28,13 @@ import java.util.ArrayList;
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.fragments.EventoFragment;
 import cruz.cesar.com.kangoogift.listeners.AddEventoListener;
+import cruz.cesar.com.kangoogift.listeners.EditEventoListener;
 import cruz.cesar.com.kangoogift.model.Persona;
 
 public class EventoDetalle extends AppCompatActivity implements EventoFragment.OnFragmentInteractionListener{
 
     Toolbar toolbar;
+
     DB_Helper dbHelper;
     SQLiteDatabase db;
 
@@ -60,11 +62,11 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        DB_Helper db_helper = new DB_Helper(this);
-        SQLiteDatabase db = db_helper.getReadableDatabase();
+        dbHelper = new DB_Helper(this);
+        db = dbHelper.getWritableDatabase();
 
 //       Cursor cursor = db_helper.getPersonaDatos(db);
-        Cursor cursor = db_helper.getPersonaWhereEvento_id(db, getIntent().getIntExtra("id", 1));
+        Cursor cursor = dbHelper.getPersonaWhereEvento_id(db, getIntent().getIntExtra("id", 1));
 
 
         if(cursor.moveToFirst()) {
@@ -81,7 +83,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                 arrayList.add(evento);
 
             } while (cursor.moveToNext());
-            db_helper.close();
+            dbHelper.close();
 
             adapter = new PersonaRecyclerAdapter(arrayList, this);
             recyclerView.setAdapter(adapter);
@@ -115,10 +117,15 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
         int id = item.getItemId();
 
         switch (id){
+
+            ///////////////////////////
+            //BORRAR EVENTO////////////
+            ///////////////////////////
+
             case R.id.delete_evento:
 
                 // 1. Instantiate an AlertDialog.Builder with its constructor
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
                 // 2. Chain together various setter methods to set the dialog characteristics
                 builder.setMessage(R.string.confirmarBorrarEvento)
@@ -133,11 +140,9 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         //BORRAR EVENTO//
                         /////////////////
 
-                        dbHelper = new DB_Helper(EventoDetalle.this);
-                        db = dbHelper.getWritableDatabase();
                         int idEvento = getIntent().getIntExtra("id", 1000);
                         String stringId = String.valueOf(idEvento);
-                        dbHelper.borrarEvento(stringId , db);
+                        dbHelper.borrarEvento(stringId, db);
 
                         //////////////////////////////////////
                         //SE REDIRIGE AL FRAGMENT DE EVENTOS//
@@ -176,7 +181,56 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
                 break;
 
+            ///////////////////////////
+            //EDITAR EVENTO////////////
+            ///////////////////////////
+
+            case R.id.edit_evento:
+
+
+                DB_Helper dbHelperEDIT = new DB_Helper(this);
+                SQLiteDatabase dbEDIT = dbHelperEDIT.getWritableDatabase();
+
+                int idEvento = getIntent().getIntExtra("id", 1000);
+
+                Dialog dialogB = new Dialog(EventoDetalle.this);
+                dialogB.setTitle(R.string.edit_evento);
+                dialogB.setContentView(R.layout.edit_evento_customdialog);
+                dialogB.show();
+
+                EditText editTextNombreB = (EditText)dialogB.findViewById(R.id.nombre);
+                EditText editTextFechaB = (EditText)dialogB.findViewById(R.id.fecha);
+                EditText editTextComentarioB = (EditText)dialogB.findViewById(R.id.comentario);
+
+                editTextFechaB.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if(hasFocus){
+                            DialogFragment fechaDialog = new FechaDialog(v);
+
+                            fechaDialog.show(getSupportFragmentManager(), "DatePicker");
+
+
+                        }
+                    }
+                });
+
+                Button btnEditEvento = (Button)dialogB.findViewById(R.id.btnEditEvento);
+
+                FragmentManager fragmentManagerB;
+                fragmentManagerB = getSupportFragmentManager();
+
+                EditEventoListener editEventoListener = new EditEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManagerB , dialogB,
+                        editTextNombreB, editTextFechaB, editTextComentarioB, dbEDIT, dbHelperEDIT, idEvento);
+
+                btnEditEvento.setOnClickListener(editEventoListener);
+
+                return true;
+
             case R.id.add_evento:
+
+                DB_Helper dbHelperADD = new DB_Helper(this);
+                SQLiteDatabase dbADD = dbHelperADD.getWritableDatabase();
 
                 Dialog dialogA = new Dialog(EventoDetalle.this);
                 dialogA.setTitle(R.string.add_evento);
@@ -206,7 +260,8 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                 FragmentManager fragmentManager;
                 fragmentManager = getSupportFragmentManager();
 
-                AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManager , dialogA, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
+                AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManager , dialogA,
+                        editTextNombre, editTextFecha, editTextComentario, dbADD, dbHelperADD);
 
 
 

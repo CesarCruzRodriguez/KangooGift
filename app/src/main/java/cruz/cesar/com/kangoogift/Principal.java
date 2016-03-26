@@ -141,26 +141,26 @@ public class Principal extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.inicio:
+            case R.id.eventos:
 
                 item.setChecked(true);
                 setFragment(0);
                 break;
-            case R.id.eventos:
+            case R.id.personas:
 
-                item.setChecked(true);
-                setFragment(1);
+//                item.setChecked(true);
+//                setFragment(1);
                 break;
-            case R.id.nav_slideshow:
-
-                break;
-            case R.id.nav_manage:
+            case R.id.regalos:
 
                 break;
-            case R.id.nav_share:
+            case R.id.lista_resumen:
 
                 break;
-            case R.id.nav_send:
+            case R.id.informacion:
+
+                break;
+            case R.id.contacto:
 
                 break;
         }
@@ -179,21 +179,23 @@ public class Principal extends AppCompatActivity
             case 0:
 
                 fragmentManager = getSupportFragmentManager();
-                InicioFragment inicioFragment= new InicioFragment();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.relativeLPrincipal, inicioFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                break;
-            case 1:
-
-                fragmentManager = getSupportFragmentManager();
                 EventoFragment eventoFragment= new EventoFragment(this);
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.relativeLPrincipal, eventoFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;
+
+            case 1:
+
+                fragmentManager = getSupportFragmentManager();
+                InicioFragment inicioFragment= new InicioFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.relativeLPrincipal, inicioFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                break;
+
             default:
                 break;
         }

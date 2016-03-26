@@ -3,33 +3,33 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/inicio"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/eventos"
+            android:icon="@drawable/ic_action_calendar"
             android:title="Inicio" />
         <item
-            android:id="@+id/eventos"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Eventos" />
+            android:id="@+id/personas"
+            android:icon="@drawable/ic_action_group_users"
+            android:title="Personas" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/regalos"
+            android:icon="@drawable/ic_action_gift"
+            android:title="Regalos" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/lista_resumen"
+            android:icon="@drawable/ic_action_lista_resumen"
+            android:title="Lista" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/informacion"
+                android:icon="@drawable/ic_action_info"
+                android:title="Información" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/contacto"
+                android:icon="@drawable/ic_action_contacto"
+                android:title="Contacto" />
         </menu>
     </item>
 
