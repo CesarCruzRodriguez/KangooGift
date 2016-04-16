@@ -108,13 +108,13 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
     }
 
-    @Override
-    public void onRestart()
-    {
-        super.onRestart();
-        finish();
-        startActivity(getIntent());
-    }
+//    @Override
+//    public void onRestart()
+//    {
+//        super.onRestart();
+//        finish();
+//        startActivity(getIntent());
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -211,7 +211,6 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                 Dialog dialogB = new Dialog(EventoDetalle.this);
                 dialogB.setTitle(R.string.edit_evento);
                 dialogB.setContentView(R.layout.edit_evento_customdialog);
-                dialogB.show();
 
                 EditText editTextNombreB = (EditText)dialogB.findViewById(R.id.nombre);
                 EditText editTextFechaB = (EditText)dialogB.findViewById(R.id.fecha);
@@ -220,12 +219,24 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                 editTextFechaB.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        if(hasFocus){
+                        if (hasFocus) {
                             DialogFragment fechaDialog = new FechaDialog(v);
                             fechaDialog.show(getSupportFragmentManager(), "DatePicker");
                         }
                     }
                 });
+
+                Cursor cursor = dbHelper.getEvenetoDatosWhereId(idEvento, db);
+
+                cursor.moveToFirst();
+                do{
+                    editTextNombreB.setText(cursor.getString(1));
+                    editTextFechaB.setText(cursor.getString(2));
+                    editTextComentarioB.setText(cursor.getString(3));
+                }while(cursor.moveToNext());
+                cursor.close();
+
+                dialogB.show();
 
                 Button btnEditEvento = (Button)dialogB.findViewById(R.id.btnEditEvento);
 

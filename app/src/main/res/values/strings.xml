@@ -33,4 +33,6 @@
     <string name="add_regalo">añadir regalo</string>
     <string name="confirmarBorrarPersona">¿Desea borrar esta persona?</string>
     <string name="borrar_persona">Borrar Persona</string>
+    <string name="edit_regalo">Editar Regalo</string>
+    <string name="estado">comprado</string>
 </resources>

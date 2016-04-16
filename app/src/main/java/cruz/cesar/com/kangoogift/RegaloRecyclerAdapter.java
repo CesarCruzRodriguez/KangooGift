@@ -1,5 +1,6 @@
 package cruz.cesar.com.kangoogift;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -76,6 +80,31 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
             Regalo regalo = this.regalos.get(position);
 
             Log.d("click regalo", "regalo click " + regalo.getNombre());
+
+
+
+            Dialog dialog = new Dialog(ctx);
+            dialog.setTitle(R.string.edit_regalo);
+            dialog.setContentView(R.layout.edit_regalo_customdialog);
+
+            EditText editTextNombre = (EditText)dialog.findViewById(R.id.nombre);
+            EditText editTextComentario = (EditText)dialog.findViewById(R.id.comentario);
+            CheckBox checkBoxEstado = (CheckBox)dialog.findViewById(R.id.estado);
+            Button btnEditRegalo = (Button)dialog.findViewById(R.id.btnEditRegalo);
+            Button btnDeleteRegalo = (Button)dialog.findViewById(R.id.btnDeleteRegalo);
+
+            editTextNombre.setText(regalo.getNombre());
+            editTextComentario.setText(regalo.getComentario());
+            if(regalo.getEstado().equals("comprado")){
+                checkBoxEstado.setChecked(true);
+            }
+            else{
+                checkBoxEstado.setChecked(false);
+            }
+            dialog.show();
+
+
+
 //
 //            Intent intent = new Intent(this.ctx, RegaloDetalle.class);
 //            intent.putExtra("id", regalo.getId());

@@ -117,6 +117,21 @@ public class DB_Helper extends SQLiteOpenHelper{
         return cursor;
     }
 
+    public Cursor getEvenetoDatosWhereId(int evento_id, SQLiteDatabase db){
+
+        String selection = EventoDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(evento_id) };
+
+        String[] projection = {EventoDb.FeedEntry.COLUMN_NAME_ID,
+                EventoDb.FeedEntry.COLUMN_NAME_NOMBRE,
+                EventoDb.FeedEntry.COLUMN_NAME_FECHA,
+                EventoDb.FeedEntry.COLUMN_NAME_COMENTARIO};
+
+        Cursor cursor = db.query(EventoDb.FeedEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        return cursor;
+    }
+
     //////////////////////
     //METODOS PERSONAS///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////
