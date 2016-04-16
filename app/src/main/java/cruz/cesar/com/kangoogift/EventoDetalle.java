@@ -87,7 +87,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                 arrayList.add(evento);
 
             } while (cursor.moveToNext());
-            dbHelper.close();
+            cursor.close();
 
             adapter = new PersonaRecyclerAdapter(arrayList, this);
             recyclerView.setAdapter(adapter);
