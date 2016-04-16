@@ -55,6 +55,7 @@ public class Principal extends AppCompatActivity
         db = dbHelper.getWritableDatabase();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Eventos");
         setSupportActionBar(toolbar);
 
 
@@ -101,6 +102,14 @@ public class Principal extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 
     @Override

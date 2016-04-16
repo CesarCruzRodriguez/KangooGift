@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +52,9 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
         toolbar.setTitle(getIntent().getStringExtra("nombre"));
         setSupportActionBar(toolbar);
 
+        //BOTON BACK
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         /////////////////////////
         //RECYCLERVIEW PERSONAS//
         /////////////////////////
@@ -102,6 +103,16 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         .setAction("Action", null).show();
             }
         });
+
+
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 
     @Override
@@ -202,7 +213,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
                 int idEvento = getIntent().getIntExtra("id", 1000);
 
-                Dialog dialogB = new Dialog(EventoDetalle.this);
+                Dialog dialogB = new Dialog(EventoDetalle.this);  //
                 dialogB.setTitle(R.string.edit_evento);
                 dialogB.setContentView(R.layout.edit_evento_customdialog);
                 dialogB.show();
@@ -232,9 +243,23 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 //                EditEventoListener editEventoListener = new EditEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManagerB , dialogB,
 //                        editTextNombreB, editTextFechaB, editTextComentarioB, dbEDIT, dbHelperEDIT, idEvento);
 
-                EditEventoListener editEventoListener = new EditEventoListener(EventoDetalle.this, dialogB, editTextNombreB, editTextFechaB, editTextComentarioB, dbHelperEDIT, dbEDIT, idEvento);
+                final EditEventoListener editEventoListener = new EditEventoListener(EventoDetalle.this, dialogB, editTextNombreB, editTextFechaB, editTextComentarioB, dbHelperEDIT, dbEDIT, idEvento);
 
                 btnEditEvento.setOnClickListener(editEventoListener);
+
+                //////////////EVENTO CUANDO SE ACEPTA EL CUSTOM DIALOG ////////////////////////////////////
+                dialogB.setOnDismissListener((new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+
+                        Log.d("onDismiss", "mensaje de OnDismiss");
+                        Intent _intent = new Intent(EventoDetalle.this, EventoDetalle.class);
+                        _intent.putExtra("nombre", editEventoListener.getResultado());
+                        _intent.putExtra("id", editEventoListener.get_id());
+                        finish();
+                        startActivity(_intent);
+                    }
+                }));
 
                 return true;
 
@@ -281,6 +306,10 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
                 return true;
 
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
             default:
                 break;
         }
@@ -292,4 +321,5 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }

@@ -1,11 +1,14 @@
 package cruz.cesar.com.kangoogift.listeners;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -28,6 +31,9 @@ public class EditEventoListener implements View.OnClickListener {
     SQLiteDatabase db;
     DB_Helper db_helper;
     int id;
+
+    private String _nombre;
+    private int _id;
 
     public EditEventoListener(Context ctx, Dialog dialog, EditText etNombre, EditText etFecha, EditText etComentario, DB_Helper db_helper, SQLiteDatabase db, int id) {
         this.ctx = ctx;
@@ -63,14 +69,17 @@ public class EditEventoListener implements View.OnClickListener {
                                         etFecha.getText().toString(),
                                         etComentario.getText().toString(), db);
 
+        set_nombre(etNombre.getText().toString());
+        set_id(id);
         dialog.dismiss();
 
-        Intent intent = new Intent(ctx, EventoDetalle.class);
-        intent.putExtra("id", id);
-        intent.putExtra("nombre",  etNombre.getText().toString());
-        intent.putExtra("fecha",  etFecha.getText().toString());
-        intent.putExtra("comentario", etComentario.getText().toString());
-        ctx.startActivity(intent);
+
+//        Intent intent = new Intent(ctx, EventoDetalle.class);
+//        intent.putExtra("id", id);
+//        intent.putExtra("nombre",  etNombre.getText().toString());
+//        intent.putExtra("fecha",  etFecha.getText().toString());
+//        intent.putExtra("comentario", etComentario.getText().toString());
+//        ctx.startActivity(intent);
 
 //        FragmentTransaction fragmentTransaction;
 //
@@ -81,4 +90,19 @@ public class EditEventoListener implements View.OnClickListener {
 //        fragmentTransaction.commit();
 
     }
+
+
+    public int get_id() {
+        return _id;
+    }
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+    public void set_nombre(String nombre){
+        _nombre = nombre;
+    }
+    public String getResultado(){
+        return _nombre;
+    }
+
 }
