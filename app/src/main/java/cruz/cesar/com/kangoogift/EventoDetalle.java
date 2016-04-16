@@ -1,6 +1,7 @@
 package cruz.cesar.com.kangoogift;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -160,24 +161,8 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         //SE REDIRIGE A ACTIVYITY DE EVENTOS//
                         //////////////////////////////////////
 
-                        Intent intent = new Intent(EventoDetalle.this, Principal.class);
-                        intent.putExtra("nombre", "Eventos");
-                        EventoDetalle.this.startActivity(intent);
-
-                        //////////////////////////////////////
-                        //SE REDIRIGE AL FRAGMENT DE EVENTOS//
-                        //////////////////////////////////////
-
-//                        FragmentTransaction fragmentTransaction;
-//                        android.support.v4.app.FragmentManager fragmentManager;
-//                        fragmentManager = getSupportFragmentManager();
-//                        EventoFragment eventoFragment= new EventoFragment(EventoDetalle.this);
-//                        fragmentTransaction = fragmentManager.beginTransaction();
-//                        fragmentTransaction.add(R.id.relativeLEventoDetalle, eventoFragment);
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-
-
+                        dialog.dismiss();
+//
                         /////////////////////////
                         //CAMBIANDO EL TOOLBAR///
                         /////////////////////////
@@ -199,6 +184,16 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
+                //Redireccion a Eventos
+                dialog.setOnDismissListener((new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+
+                        Log.d("onDismiss", "mensaje de OnDismiss de BorrarEvento");
+                        onBackPressed();
+                    }
+                }));
+
                 break;
 
             ///////////////////////////
@@ -213,7 +208,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
                 int idEvento = getIntent().getIntExtra("id", 1000);
 
-                Dialog dialogB = new Dialog(EventoDetalle.this);  //
+                Dialog dialogB = new Dialog(EventoDetalle.this);
                 dialogB.setTitle(R.string.edit_evento);
                 dialogB.setContentView(R.layout.edit_evento_customdialog);
                 dialogB.show();
@@ -252,7 +247,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                     @Override
                     public void onDismiss(DialogInterface dialog) {
 
-                        Log.d("onDismiss", "mensaje de OnDismiss");
+                        Log.d("onDismiss", "mensaje de OnDismiss de EditarEvento");
                         Intent _intent = new Intent(EventoDetalle.this, EventoDetalle.class);
                         _intent.putExtra("nombre", editEventoListener.getResultado());
                         _intent.putExtra("id", editEventoListener.get_id());

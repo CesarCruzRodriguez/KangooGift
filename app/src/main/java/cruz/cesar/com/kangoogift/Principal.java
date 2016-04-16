@@ -1,6 +1,7 @@
 package cruz.cesar.com.kangoogift;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -170,10 +172,22 @@ public class Principal extends AppCompatActivity
 //            AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLPrincipal,Principal.this, fragmentManager , dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
             AddEventoListener eventoListener = new AddEventoListener(this,dialog, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
 
-
-
             //manejador de insertar eventos en BD.
             btnAddEvento.setOnClickListener(eventoListener);
+
+            //EVETNO DISMISS DEL DIALOG
+            dialog.setOnDismissListener((new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+
+                    Log.d("onDismiss", "mensaje de OnDismiss");
+                    Intent _intent = new Intent(Principal.this, Principal.class);
+                    finish();
+                    startActivity(_intent);
+                }
+            }));
+//            finish();
+//            startActivity(getIntent());
 
             return true;
         }

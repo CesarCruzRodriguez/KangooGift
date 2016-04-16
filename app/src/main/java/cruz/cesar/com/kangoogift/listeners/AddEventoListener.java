@@ -62,16 +62,9 @@ public class AddEventoListener implements View.OnClickListener {
 
         dialog.dismiss();
 
-        Intent intent = new Intent(ctx, Principal.class);
-        intent.putExtra("nombre", "Eventos");
-        ctx.startActivity(intent);
-
-//        FragmentTransaction fragmentTransaction;
-//        EventoFragment eventoFragment= new EventoFragment(ctx);
-//        fragmentTransaction = this.fragmentManager.beginTransaction();
-//        fragmentTransaction.add(plantilla, eventoFragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+//        Intent intent = new Intent(ctx, Principal.class);
+//        intent.putExtra("nombre", "Eventos");
+//        ctx.startActivity(intent);
 
         Log.d("AddEventoListener", "Insertando datos en la base de datos... " + etNombre.getText());
 
