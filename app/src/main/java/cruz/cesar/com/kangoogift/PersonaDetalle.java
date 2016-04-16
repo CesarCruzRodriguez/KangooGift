@@ -3,13 +3,14 @@ package cruz.cesar.com.kangoogift;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,14 +19,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.listeners.EditPeronaListener;
+import cruz.cesar.com.kangoogift.model.Regalo;
 
 public class PersonaDetalle extends AppCompatActivity {
 
     int idPersona;
     private DB_Helper dbHelper;
     private SQLiteDatabase db;
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    ArrayList<Regalo> arrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +49,38 @@ public class PersonaDetalle extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //RECYCLERVIEW
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewRegalos);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
         dbHelper = new DB_Helper(this);
         db = dbHelper.getWritableDatabase();
+
+        Cursor cursor = dbHelper.getRegaloWherePersona_id(db, getIntent().getIntExtra("id", 1));
+
+        if(cursor.moveToFirst()){
+            do {
+                Regalo regalo = new Regalo(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4)
+                );
+                Log.d("Cursor Regalo", " regalo nombre: " + cursor.getString(2));
+                arrayList.add(regalo);
+
+            }while (cursor.moveToNext());
+            cursor.close();
+
+            adapter = new RegaloRecyclerAdapter(arrayList, this);
+            recyclerView.setAdapter(adapter);
+        }
+        else{
+            Log.d("Cursor.moveToFirst ", "El cursor estaba vacío");
+        }
     }
 
     @Override

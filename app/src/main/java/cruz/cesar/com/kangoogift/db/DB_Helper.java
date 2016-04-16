@@ -35,6 +35,9 @@ public class DB_Helper extends SQLiteOpenHelper{
         insertarPersona(1, "Pepe", "22-12-2016", "mi tio", db);
         insertarPersona(1, "Juana", "21-12-2016", "mi tia", db);
 
+        insertarRegalo(2, "Plancha", "comprado", "marca Techk", db);
+        insertarRegalo(2, "Taladro", "comprado", "marca Techk", db);
+
     }
 
     @Override
@@ -49,7 +52,7 @@ public class DB_Helper extends SQLiteOpenHelper{
     }
 
     //////////////////////
-    //MÉTODOS DE EVENTOS//
+    //MÉTODOS DE EVENTOS/////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////
 
     public void insertarEventoCumpleaños(String nombre, String comentario, SQLiteDatabase db){
@@ -115,7 +118,7 @@ public class DB_Helper extends SQLiteOpenHelper{
     }
 
     //////////////////////
-    //METODOS PERSONAS////
+    //METODOS PERSONAS///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////
 
     public void insertarPersona(int evento_id, String nombre,  String fecha, String comentario, SQLiteDatabase db){
@@ -178,4 +181,40 @@ public class DB_Helper extends SQLiteOpenHelper{
         return cursor;
     }
 
+    //////////////////////
+    //METODOS REGALOS ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////
+
+    public void insertarRegalo(int persona_id ,String nombre, String estado, String comentario, SQLiteDatabase db){
+
+        ContentValues values = new ContentValues();
+        values.put(RegaloDb.FeedEntry.COLUMN_NAME_PERSONA_ID, persona_id);
+        values.put(RegaloDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
+        values.put(RegaloDb.FeedEntry.COLUMN_NAME_ESTADO, estado);
+        values.put(RegaloDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
+        long l =  db.insert(RegaloDb.FeedEntry.TABLE_NAME, null, values);
+
+        Log.d("Database operaciion", "Una fila insertada... de regalos");
+
+    }
+
+    public Cursor getRegaloWherePersona_id(SQLiteDatabase db, int persona_id){
+
+        String selection = RegaloDb.FeedEntry.COLUMN_NAME_PERSONA_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(persona_id) };
+
+        String[] projection = {RegaloDb.FeedEntry.COLUMN_NAME_ID,
+                RegaloDb.FeedEntry.COLUMN_NAME_PERSONA_ID,
+                RegaloDb.FeedEntry.COLUMN_NAME_NOMBRE,
+                RegaloDb.FeedEntry.COLUMN_NAME_ESTADO,
+                RegaloDb.FeedEntry.COLUMN_NAME_COMENTARIO};
+
+//        String ps_id = String.valueOf(persona_id);
+//        Cursor cursor = db.rawQuery("SELECT * FROM regalos WHERE persona_id like " + ps_id, null);
+        Cursor cursor = db.query(RegaloDb.FeedEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        Log.d("Database operaciion", "getRegaloWherePersona... de regalos " + persona_id);
+
+        return cursor;
+    }
 }

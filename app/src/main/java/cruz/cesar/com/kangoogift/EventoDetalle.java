@@ -75,7 +75,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
         if(cursor.moveToFirst()) {
             do {
 
-                Persona evento = new Persona(
+                Persona persona = new Persona(
                         cursor.getInt(0),
                         cursor.getInt(1),
                         cursor.getString(2),
@@ -83,7 +83,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         cursor.getString(4)
                 );
 
-                arrayList.add(evento);
+                arrayList.add(persona);
 
             } while (cursor.moveToNext());
             cursor.close();
