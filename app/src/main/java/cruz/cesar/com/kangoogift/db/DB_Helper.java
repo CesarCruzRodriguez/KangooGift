@@ -150,6 +150,21 @@ public class DB_Helper extends SQLiteOpenHelper{
         Log.d("Database operaciion", "Una fila borrada... de personas");
     }
 
+    public void actualizarPersona(int id, String nombre, String fecha, String comentario, SQLiteDatabase db){
+
+        String selection = PersonaDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+        ContentValues values = new ContentValues();
+        values.put(PersonaDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
+        values.put(PersonaDb.FeedEntry.COLUMN_NAME_FECHA, fecha);
+        values.put(PersonaDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
+        long l =  db.update(PersonaDb.FeedEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        Log.d("Database operaciion", "Una fila actualizada... de personas " + id);
+
+    }
+
     public Cursor getPersonaDatos(SQLiteDatabase db){
 
         String[] projection = {PersonaDb.FeedEntry.COLUMN_NAME_ID,
