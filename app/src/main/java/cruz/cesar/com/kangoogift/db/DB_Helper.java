@@ -32,8 +32,8 @@ public class DB_Helper extends SQLiteOpenHelper{
         insertarEvento("Navidad", "25-12-2016", "Este año es en casa de mi tía.", db);
 //        insertarEventoCumpleaños("Navidad", "Este año es en la casa de mi Tia ...", db);
 
-        insertarPersona("1", "Pepe", "22-12-2016", "mi tio", db);
-        insertarPersona("1", "Juana", "21-12-2016", "mi tia", db);
+        insertarPersona(1, "Pepe", "22-12-2016", "mi tio", db);
+        insertarPersona(1, "Juana", "21-12-2016", "mi tia", db);
 
     }
 
@@ -81,7 +81,7 @@ public class DB_Helper extends SQLiteOpenHelper{
             values.put(EventoDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
             long l =  db.insert(EventoDb.FeedEntry.TABLE_NAME, null, values);
 
-            Log.d("Database operaciion", "Una fila insertada...");
+            Log.d("Database operaciion", "Una fila insertada... de eventos");
 //
 //            db.setTransactionSuccessful();
 //        } finally {
@@ -104,7 +104,7 @@ public class DB_Helper extends SQLiteOpenHelper{
             values.put(EventoDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
             long l =  db.update(EventoDb.FeedEntry.TABLE_NAME, values, selection, selectionArgs);
 
-            Log.d("Database operaciion", "Una fila actualizada...");
+            Log.d("Database operaciion", "Una fila actualizada... de eventos");
 
     }
 
@@ -120,7 +120,7 @@ public class DB_Helper extends SQLiteOpenHelper{
 
 //        try{
             db.delete(EventoDb.FeedEntry.TABLE_NAME, selection, valor);
-            Log.d("Database operaciion", "Una fila borrada...");
+            Log.d("Database operaciion", "Una fila borrada... de eventos");
 //            db.setTransactionSuccessful();
 //        }finally {
 //            db.endTransaction();
@@ -145,22 +145,22 @@ public class DB_Helper extends SQLiteOpenHelper{
     //METODOS PERSONAS////
     //////////////////////
 
-    public void insertarPersona(String evento_id, String nombre,  String fecha, String comentario, SQLiteDatabase db){
+    public void insertarPersona(int evento_id, String nombre,  String fecha, String comentario, SQLiteDatabase db){
 
 //        db.beginTransaction();
 
         //TIPO INT EN BASE DE DATOS.................................................................
-        int numeroEvento_id = Integer.parseInt(evento_id);
+//        int numeroEvento_id = Integer.parseInt(evento_id);
 
 //        try {
             ContentValues values = new ContentValues();
-            values.put(PersonaDb.FeedEntry.COLUMN_NAME_EVENTO_ID, numeroEvento_id);
+            values.put(PersonaDb.FeedEntry.COLUMN_NAME_EVENTO_ID, evento_id);
             values.put(PersonaDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
             values.put(PersonaDb.FeedEntry.COLUMN_NAME_FECHA, fecha);
             values.put(PersonaDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
             long l =  db.insert(PersonaDb.FeedEntry.TABLE_NAME, null, values);
 
-            Log.d("Database operaciion", "Una fila insertada...");
+            Log.d("Database operaciion", "Una fila insertada... en personas");
 
 //            db.setTransactionSuccessful();
 //        } finally {

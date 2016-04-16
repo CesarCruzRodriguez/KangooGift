@@ -26,4 +26,6 @@
     <string name="title_activity_persona_detalle">PersonaDetalle</string>
     <string name="edit_evento">editar_evento</string>
     <string name="Editar">Editar</string>
+    <string name="add_persona">añadir persona</string>
+    <string name="cumpleanos">cumpleaños</string>
 </resources>

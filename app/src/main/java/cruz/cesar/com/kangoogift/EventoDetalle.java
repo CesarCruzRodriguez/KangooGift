@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.fragments.EventoFragment;
 import cruz.cesar.com.kangoogift.listeners.AddEventoListener;
+import cruz.cesar.com.kangoogift.listeners.AddPersonaListener;
 import cruz.cesar.com.kangoogift.listeners.EditEventoListener;
 import cruz.cesar.com.kangoogift.model.Persona;
 
@@ -222,21 +223,12 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                     public void onFocusChange(View v, boolean hasFocus) {
                         if(hasFocus){
                             DialogFragment fechaDialog = new FechaDialog(v);
-
                             fechaDialog.show(getSupportFragmentManager(), "DatePicker");
-
-
                         }
                     }
                 });
 
                 Button btnEditEvento = (Button)dialogB.findViewById(R.id.btnEditEvento);
-
-//                FragmentManager fragmentManagerB;
-//                fragmentManagerB = getSupportFragmentManager();
-//
-//                EditEventoListener editEventoListener = new EditEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManagerB , dialogB,
-//                        editTextNombreB, editTextFechaB, editTextComentarioB, dbEDIT, dbHelperEDIT, idEvento);
 
                 final EditEventoListener editEventoListener = new EditEventoListener(EventoDetalle.this, dialogB, editTextNombreB, editTextFechaB, editTextComentarioB, dbHelperEDIT, dbEDIT, idEvento);
 
@@ -288,18 +280,55 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
 
                 Button btnAddEvento = (Button)dialogA.findViewById(R.id.btnAddEvento);
 
-//                FragmentManager fragmentManager;
-//                fragmentManager = getSupportFragmentManager();
-//
-//                AddEventoListener eventoListener = new AddEventoListener(R.id.relativeLEventoDetalle, EventoDetalle.this, fragmentManager , dialogA,
-//                        editTextNombre, editTextFecha, editTextComentario, dbADD, dbHelperADD);
-
                 AddEventoListener eventoListener = new AddEventoListener(EventoDetalle.this, dialogA, editTextNombre, editTextFecha, editTextComentario, db, dbHelper);
 
                 //manejador de insertar eventos en BD.
                 btnAddEvento.setOnClickListener(eventoListener);
 
                 return true;
+
+            case R.id.add_persona:
+
+                Dialog dialogC = new Dialog(EventoDetalle.this);
+                dialogC.setTitle(R.string.add_persona);
+                dialogC.setContentView(R.layout.add_persona_customdialog_layout);
+                dialogC.show();
+
+                EditText editTextNombre_persona = (EditText)dialogC.findViewById(R.id.nombre);
+                EditText editTextFecha_persona = (EditText)dialogC.findViewById(R.id.fecha);
+                EditText editTextComentario_persona = (EditText)dialogC.findViewById(R.id.comentario);
+
+                //el datepicker para pillar la fecha
+                editTextFecha_persona.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if(hasFocus){
+                            DialogFragment fechaDialog = new FechaDialog(v);
+
+                            fechaDialog.show(getSupportFragmentManager(), "DatePicker");
+
+
+                        }
+                    }
+                });
+                int idEventoC = getIntent().getIntExtra("id", 1000);
+                Button btnAddPersona = (Button)dialogC.findViewById(R.id.btnAddPersona);
+                AddPersonaListener personaListener = new AddPersonaListener(idEventoC, EventoDetalle.this, dialogC, editTextNombre_persona, editTextFecha_persona, editTextComentario_persona, dbHelper, db);
+
+                btnAddPersona.setOnClickListener(personaListener);
+
+                dialogC.setOnDismissListener((new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+
+                        Log.d("onDismiss", "mensaje de OnDismiss de EditarEvento");
+//                        Intent _intent = new Intent(EventoDetalle.this, EventoDetalle.class);
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }));
+
+                break;
 
             case android.R.id.home:
                 onBackPressed();
