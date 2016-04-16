@@ -2,31 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
-        android:id="@+id/delete_evento"
+        android:id="@+id/delete_persona"
         android:orderInCategory="100"
         android:icon="@drawable/ic_delete_sweep"
         app:showAsAction="always"
-        android:title="@string/add_evento" />
+        android:title="@string/delete_persona" />
 
     <item
-        android:id="@+id/edit_evento"
+        android:id="@+id/edit_persona"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_edit"
         app:showAsAction="always"
-        android:title="@string/edit_evento" />
+        android:title="@string/edit_persona" />
 
     <item
-        android:id="@+id/add_persona"
+        android:id="@+id/add_regalo"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_person_add"
+        android:icon="@drawable/ic_regalo"
         app:showAsAction="always"
-        android:title="@string/add_persona" />
-
-    <!--<item-->
-        <!--android:id="@+id/action_settings"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="@string/action_settings"-->
-        <!--app:showAsAction="never" />-->
+        android:title="@string/add_regalo" />
 
 </menu>

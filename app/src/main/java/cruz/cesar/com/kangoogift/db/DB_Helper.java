@@ -136,9 +136,18 @@ public class DB_Helper extends SQLiteOpenHelper{
 
         String ev_id = String.valueOf(evento_id);
 
-        Cursor cursor = db.rawQuery("SELECT * FROM personas WHERE evento_id like " + ev_id , null);
+        Cursor cursor = db.rawQuery("SELECT * FROM personas WHERE evento_id like " + ev_id, null);
 
         return cursor;
+    }
+
+    public void borrarPersona(String id, SQLiteDatabase db){
+
+        String selection = PersonaDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+        String[] valor = { String.valueOf(id) };
+
+        db.delete(PersonaDb.FeedEntry.TABLE_NAME, selection, valor);
+        Log.d("Database operaciion", "Una fila borrada... de personas");
     }
 
     public Cursor getPersonaDatos(SQLiteDatabase db){

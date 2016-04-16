@@ -1,7 +1,6 @@
 package cruz.cesar.com.kangoogift;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -168,8 +167,8 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                         //CAMBIANDO EL TOOLBAR///
                         /////////////////////////
 
-                        toolbar.getMenu().clear();
-                        getMenuInflater().inflate(R.menu.evento_detalle_eventos_toolbar_items, toolbar.getMenu());
+//                        toolbar.getMenu().clear();
+//                        getMenuInflater().inflate(R.menu.evento_detalle_eventos_toolbar_items, toolbar.getMenu());
 
 
                     }

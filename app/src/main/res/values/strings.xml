@@ -28,4 +28,9 @@
     <string name="Editar">Editar</string>
     <string name="add_persona">añadir persona</string>
     <string name="cumpleanos">cumpleaños</string>
+    <string name="delete_persona">borrar persona</string>
+    <string name="edit_persona">editar persona</string>
+    <string name="add_regalo">añadir regalo</string>
+    <string name="confirmarBorrarPersona">¿Desea borrar esta persona?</string>
+    <string name="borrar_persona">Borrar Persona</string>
 </resources>
