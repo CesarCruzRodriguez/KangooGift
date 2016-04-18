@@ -164,7 +164,7 @@ public class PersonaDetalle extends AppCompatActivity {
                 Dialog dialog_edit = new Dialog(PersonaDetalle.this);
                 dialog_edit.setTitle(R.string.edit_persona);
                 dialog_edit.setContentView(R.layout.edit_evento_customdialog);
-                dialog_edit.show();
+
 
                 EditText editTextNombre = (EditText)dialog_edit.findViewById(R.id.nombre);
                 EditText editTextFecha = (EditText)dialog_edit.findViewById(R.id.fecha);
@@ -179,6 +179,8 @@ public class PersonaDetalle extends AppCompatActivity {
                         }
                     }
                 });
+
+                dialog_edit.show();
 
                 final Button btnEditPersona = (Button)dialog_edit.findViewById(R.id.btnEditEvento);
 
