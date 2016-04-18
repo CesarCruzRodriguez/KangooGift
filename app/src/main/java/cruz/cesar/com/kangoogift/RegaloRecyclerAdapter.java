@@ -1,8 +1,12 @@
 package cruz.cesar.com.kangoogift;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cruz.cesar.com.kangoogift.db.DB_Helper;
 import cruz.cesar.com.kangoogift.model.Regalo;
 
 /**
@@ -77,7 +82,7 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
         public void onClick(View v) {
 
             int position = getAdapterPosition();
-            Regalo regalo = this.regalos.get(position);
+            final Regalo regalo = this.regalos.get(position);
 
             Log.d("click regalo", "regalo click " + regalo.getNombre());
 
@@ -87,9 +92,9 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
             dialog.setTitle(R.string.edit_regalo);
             dialog.setContentView(R.layout.edit_regalo_customdialog);
 
-            EditText editTextNombre = (EditText)dialog.findViewById(R.id.nombre);
-            EditText editTextComentario = (EditText)dialog.findViewById(R.id.comentario);
-            CheckBox checkBoxEstado = (CheckBox)dialog.findViewById(R.id.estado);
+            final EditText editTextNombre = (EditText)dialog.findViewById(R.id.nombre);
+            final EditText editTextComentario = (EditText)dialog.findViewById(R.id.comentario);
+            final CheckBox checkBoxEstado = (CheckBox)dialog.findViewById(R.id.estado);
             Button btnEditRegalo = (Button)dialog.findViewById(R.id.btnEditRegalo);
             Button btnDeleteRegalo = (Button)dialog.findViewById(R.id.btnDeleteRegalo);
 
@@ -103,8 +108,60 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
             }
             dialog.show();
 
+            btnEditRegalo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    if(checkBoxEstado.isChecked()){
+                        regalo.setEstado("comprado");
+                    }
+                    else{
+                        regalo.setEstado("idea");
+                    }
+                    regalo.setNombre(editTextNombre.getText().toString());
+                    regalo.setComentario(editTextComentario.getText().toString());
+                    // EDITAR REGALO
+                    DB_Helper db_helper = new DB_Helper(ctx);
+                    SQLiteDatabase db = db_helper.getWritableDatabase();
+                    db_helper.actualizarRegalo(regalo.getId(), regalo.getNombre(), regalo.getEstado(), regalo.getComentario(), db);
+                }
+            });
 
+            btnDeleteRegalo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    // BORRAR REGALO
+                }
+            });
+
+            dialog.setOnDismissListener((new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+
+                    Log.d("onDismiss", "mensaje de OnDismiss de EditarRegalo");
+                    Intent i = new Intent(ctx, PersonaDetalle.class);
+                    i.putExtra("id", regalo.getPersona_id());
+
+                    DB_Helper db_helper = new DB_Helper(ctx);
+                    SQLiteDatabase db = db_helper.getWritableDatabase();
+                    Cursor c = db_helper.getPersonaDatosWhereId(regalo.getPersona_id(), db);
+
+                    if(c.moveToFirst()){
+                        do {
+                            i.putExtra("nombre", c.getInt(0));
+                        }while(c.moveToNext());
+                    }
+
+                    ((Activity) ctx).startActivity(i);
+
+//                        Intent _intent = new Intent(PersonaDetalle.this, PersonaDetalle.class);
+//                        _intent.putExtra("nombre", editPeronaListener.get_nombre());
+//                        _intent.putExtra("id", editPeronaListener.get_id());
+//                        finish();
+//                        startActivity(_intent);
+                }
+            }));
 //
 //            Intent intent = new Intent(this.ctx, RegaloDetalle.class);
 //            intent.putExtra("id", regalo.getId());

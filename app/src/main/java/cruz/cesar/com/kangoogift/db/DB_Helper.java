@@ -235,4 +235,19 @@ public class DB_Helper extends SQLiteOpenHelper{
 
         return cursor;
     }
+
+    public void actualizarRegalo(int id, String nombre, String fecha, String comentario, SQLiteDatabase db){
+
+        String selection = RegaloDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+        ContentValues values = new ContentValues();
+        values.put(RegaloDb.FeedEntry.COLUMN_NAME_NOMBRE, nombre);
+        values.put(RegaloDb.FeedEntry.COLUMN_NAME_ESTADO, fecha);
+        values.put(RegaloDb.FeedEntry.COLUMN_NAME_COMENTARIO, comentario);
+        long l =  db.update(RegaloDb.FeedEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        Log.d("Database operaciion", "Una fila actualizada... de regalos " + id);
+
+    }
 }

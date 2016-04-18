@@ -25,14 +25,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Editar"
-        android:id="@+id/btnDeleteRegalo"
+        android:id="@+id/btnEditRegalo"
         android:layout_gravity="right" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/eliminar"
-        android:id="@+id/btnEditRegalo"
+        android:id="@+id/btnDeleteRegalo"
         android:layout_gravity="right" />
+
+
 
 </LinearLayout>
