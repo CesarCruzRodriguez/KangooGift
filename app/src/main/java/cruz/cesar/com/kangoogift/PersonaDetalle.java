@@ -180,6 +180,16 @@ public class PersonaDetalle extends AppCompatActivity {
                     }
                 });
 
+                Cursor cursor_edit_persona = dbHelper.getPersonaDatosWhereId(idPersona, db);
+                cursor_edit_persona.moveToFirst();
+                do{
+                    editTextNombre.setText(cursor_edit_persona.getString(2));
+                    editTextFecha.setText(cursor_edit_persona.getString(3));
+                    editTextComentario.setText(cursor_edit_persona.getString(4));
+
+                }while(cursor_edit_persona.moveToNext());
+                cursor_edit_persona.close();
+
                 dialog_edit.show();
 
                 final Button btnEditPersona = (Button)dialog_edit.findViewById(R.id.btnEditEvento);
@@ -194,11 +204,12 @@ public class PersonaDetalle extends AppCompatActivity {
                     public void onDismiss(DialogInterface dialog) {
 
                         Log.d("onDismiss", "mensaje de OnDismiss de EditarPersona");
-                        Intent _intent = new Intent(PersonaDetalle.this, PersonaDetalle.class);
-                        _intent.putExtra("nombre", editPeronaListener.get_nombre());
-                        _intent.putExtra("id", editPeronaListener.get_id());
-                        finish();
-                        startActivity(_intent);
+                        onBackPressed();
+//                        Intent _intent = new Intent(PersonaDetalle.this, PersonaDetalle.class);
+//                        _intent.putExtra("nombre", editPeronaListener.get_nombre());
+//                        _intent.putExtra("id", editPeronaListener.get_id());
+//                        finish();
+//                        startActivity(_intent);
                     }
                 }));
 

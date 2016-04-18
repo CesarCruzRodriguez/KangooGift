@@ -250,11 +250,12 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
                     public void onDismiss(DialogInterface dialog) {
 
                         Log.d("onDismiss", "mensaje de OnDismiss de EditarEvento");
-                        Intent _intent = new Intent(EventoDetalle.this, EventoDetalle.class);
-                        _intent.putExtra("nombre", editEventoListener.getResultado());
-                        _intent.putExtra("id", editEventoListener.get_id());
-                        finish();
-                        startActivity(_intent);
+                        onBackPressed();
+//                        Intent _intent = new Intent(EventoDetalle.this, EventoDetalle.class);
+//                        _intent.putExtra("nombre", editEventoListener.getResultado());
+//                        _intent.putExtra("id", editEventoListener.get_id());
+//                        finish();
+//                        startActivity(_intent);
                     }
                 }));
 

@@ -183,7 +183,10 @@ public class DB_Helper extends SQLiteOpenHelper{
 
     }
 
-    public Cursor getPersonaDatos(SQLiteDatabase db){
+    public Cursor getPersonaDatosWhereId(int persona_id, SQLiteDatabase db){
+
+        String selection = PersonaDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(persona_id) };
 
         String[] projection = {PersonaDb.FeedEntry.COLUMN_NAME_ID,
                 PersonaDb.FeedEntry.COLUMN_NAME_EVENTO_ID,
