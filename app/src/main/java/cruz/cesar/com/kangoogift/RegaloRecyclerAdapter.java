@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -134,36 +135,77 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
                 public void onClick(View v) {
 
                     // BORRAR REGALO
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+
+                    builder.setMessage(R.string.confirmarBorrarRegalo)
+                            .setTitle(R.string.borrar_regalo);
+
+                    builder.setPositiveButton(R.string.eliminar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            String id_regalo_string = String.valueOf(regalo.getId());
+                            DB_Helper db_helper = new DB_Helper(ctx);
+                            SQLiteDatabase db = db_helper.getWritableDatabase();
+                            db_helper.borrarRegalo(id_regalo_string, db);
+
+                        }
+                    });
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // cancelar
+                        }
+                    });
+
+                    AlertDialog dialog_confirm_borrar = builder.create();
+                    dialog_confirm_borrar.show();
+
+                    dialog_confirm_borrar.setOnDismissListener((new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+
+                            Log.d("onDismiss", "mensaje de OnDismiss de ElminarRegalo");
+                            ((Activity) ctx).onBackPressed();
+                        }
+                    }));
                 }
             });
+
+
 
             dialog.setOnDismissListener((new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
 
                     Log.d("onDismiss", "mensaje de OnDismiss de EditarRegalo");
-                    Intent i = new Intent(ctx, PersonaDetalle.class);
-                    i.putExtra("id", regalo.getPersona_id());
+//                    Intent i = new Intent(ctx, PersonaDetalle.class);
+//                    i.putExtra("id", regalo.getPersona_id());
+//
+//                    DB_Helper db_helper = new DB_Helper(ctx);
+//                    SQLiteDatabase db = db_helper.getReadableDatabase();
+//                    Cursor c = db_helper.getPersonaDatosWhereId(regalo.getPersona_id(), db);
+//
+//                    if(c.moveToFirst()){
+//                        do {
+//                            i.putExtra("id", c.getInt(0));
+//                            i.putExtra("nombre", c.getString(2));
+//                        }while(c.moveToNext());
+//                    }
+//                    ((Activity) ctx).finish();
+//                    ((Activity) ctx).startActivity(i);
 
-                    DB_Helper db_helper = new DB_Helper(ctx);
-                    SQLiteDatabase db = db_helper.getReadableDatabase();
-                    Cursor c = db_helper.getPersonaDatosWhereId(regalo.getPersona_id(), db);
 
-                    if(c.moveToFirst()){
-                        do {
-                            i.putExtra("id", c.getInt(0));
-                            i.putExtra("nombre", c.getString(2));
-                        }while(c.moveToNext());
-                    }
-                    ((Activity) ctx).finish();
-                    ((Activity) ctx).startActivity(i);
-
-//                    ((Activity) ctx).onBackPressed();
 //                        Intent _intent = new Intent(PersonaDetalle.this, PersonaDetalle.class);
 //                        _intent.putExtra("nombre", editPeronaListener.get_nombre());
 //                        _intent.putExtra("id", editPeronaListener.get_id());
 //                        finish();
 //                        startActivity(_intent);
+
+//                    ((Activity) ctx).onBackPressed();
+
+
+                    ((Activity) ctx).finish();
+                    ctx.startActivity(((Activity) ctx).getIntent());
                 }
             }));
 //

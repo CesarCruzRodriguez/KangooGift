@@ -194,7 +194,7 @@ public class DB_Helper extends SQLiteOpenHelper{
                 PersonaDb.FeedEntry.COLUMN_NAME_FECHA,
                 PersonaDb.FeedEntry.COLUMN_NAME_COMENTARIO};
 
-        Cursor cursor = db.query(PersonaDb.FeedEntry.TABLE_NAME, projection, null,null, null, null, null);
+        Cursor cursor = db.query(PersonaDb.FeedEntry.TABLE_NAME, projection, selection,selectionArgs, null, null, null);
 
         return cursor;
     }
@@ -249,5 +249,14 @@ public class DB_Helper extends SQLiteOpenHelper{
 
         Log.d("Database operaciion", "Una fila actualizada... de regalos " + id);
 
+    }
+
+    public void borrarRegalo(String id, SQLiteDatabase db){
+
+        String selection = RegaloDb.FeedEntry.COLUMN_NAME_ID + " LIKE ?";
+        String[] valor = { String.valueOf(id) };
+
+        db.delete(RegaloDb.FeedEntry.TABLE_NAME, selection, valor);
+        Log.d("Database operaciion", "Una fila borrada... de personas");
     }
 }

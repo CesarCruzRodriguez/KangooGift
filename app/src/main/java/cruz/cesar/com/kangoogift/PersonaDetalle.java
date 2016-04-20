@@ -2,7 +2,6 @@ package cruz.cesar.com.kangoogift;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -212,6 +212,54 @@ public class PersonaDetalle extends AppCompatActivity {
 //                        startActivity(_intent);
                     }
                 }));
+
+                break;
+
+            case R.id.add_regalo:
+
+                final DB_Helper db_helper_add_regalo = new DB_Helper(this);
+                final SQLiteDatabase db_add_regalo = db_helper_add_regalo.getWritableDatabase();
+
+                final int idPersona_add_regalo = getIntent().getIntExtra("id", 1000);
+
+                final Dialog dialogo_add_regalo = new Dialog(this);
+                dialogo_add_regalo.setTitle(R.string.add_regalo);
+                dialogo_add_regalo.setContentView(R.layout.add_regalo_customdialog_layout);
+
+                final EditText editTextNombre_add_regalo = (EditText)dialogo_add_regalo.findViewById(R.id.nombre);
+                final CheckBox check_estado_add_regalo = (CheckBox)dialogo_add_regalo.findViewById(R.id.estado);
+                final EditText editTextComentario_add_regalo = (EditText)dialogo_add_regalo.findViewById(R.id.comentario);
+
+                dialogo_add_regalo.show();
+
+                Button btn_add_regalo = (Button)dialogo_add_regalo.findViewById(R.id.btnAddRegalo);
+                btn_add_regalo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String nombre =  editTextNombre_add_regalo.getText().toString();
+
+                        String estado = "";
+                        if(check_estado_add_regalo.isChecked()) estado ="comprado";
+                        else estado = "idea";
+
+                        String comentario = editTextComentario_add_regalo.getText().toString();
+
+                        db_helper_add_regalo.insertarRegalo(idPersona_add_regalo, nombre, estado, comentario, db_add_regalo);
+
+                        dialogo_add_regalo.dismiss();
+                    }
+                });
+
+                dialogo_add_regalo.setOnDismissListener(new DialogInterface.OnDismissListener(){
+
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+
+                        PersonaDetalle.this.onBackPressed();
+                    }
+                });
+
 
                 break;
 
