@@ -88,7 +88,7 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
 
 
 
-            Dialog dialog = new Dialog(ctx);
+            final Dialog dialog = new Dialog(ctx);
             dialog.setTitle(R.string.edit_regalo);
             dialog.setContentView(R.layout.edit_regalo_customdialog);
 
@@ -106,6 +106,7 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
             else{
                 checkBoxEstado.setChecked(false);
             }
+            dialog.setCanceledOnTouchOutside(true);
             dialog.show();
 
             btnEditRegalo.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +125,7 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
                     DB_Helper db_helper = new DB_Helper(ctx);
                     SQLiteDatabase db = db_helper.getWritableDatabase();
                     db_helper.actualizarRegalo(regalo.getId(), regalo.getNombre(), regalo.getEstado(), regalo.getComentario(), db);
+                    dialog.dismiss();
                 }
             });
 
@@ -144,17 +146,19 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
                     i.putExtra("id", regalo.getPersona_id());
 
                     DB_Helper db_helper = new DB_Helper(ctx);
-                    SQLiteDatabase db = db_helper.getWritableDatabase();
+                    SQLiteDatabase db = db_helper.getReadableDatabase();
                     Cursor c = db_helper.getPersonaDatosWhereId(regalo.getPersona_id(), db);
 
                     if(c.moveToFirst()){
                         do {
-                            i.putExtra("nombre", c.getInt(0));
+                            i.putExtra("id", c.getInt(0));
+                            i.putExtra("nombre", c.getString(2));
                         }while(c.moveToNext());
                     }
-
+                    ((Activity) ctx).finish();
                     ((Activity) ctx).startActivity(i);
 
+//                    ((Activity) ctx).onBackPressed();
 //                        Intent _intent = new Intent(PersonaDetalle.this, PersonaDetalle.class);
 //                        _intent.putExtra("nombre", editPeronaListener.get_nombre());
 //                        _intent.putExtra("id", editPeronaListener.get_id());

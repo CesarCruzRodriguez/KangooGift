@@ -14,7 +14,7 @@
             android:id="@+id/imagen"
             android:layout_width="95dp"
             android:layout_height="95dp"
-            android:src="@android:drawable/ic_menu_gallery" />
+            android:src="@drawable/ic_action_group_users" />
 
         <LinearLayout
             android:layout_width="match_parent"
