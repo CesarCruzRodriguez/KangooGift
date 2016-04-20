@@ -165,7 +165,8 @@ public class RegaloRecyclerAdapter extends RecyclerView.Adapter<RegaloRecyclerAd
                         public void onDismiss(DialogInterface dialog) {
 
                             Log.d("onDismiss", "mensaje de OnDismiss de ElminarRegalo");
-                            ((Activity) ctx).onBackPressed();
+                            ((Activity) ctx).finish();
+                            ctx.startActivity(((Activity) ctx).getIntent());
                         }
                     }));
                 }

@@ -204,7 +204,10 @@ public class PersonaDetalle extends AppCompatActivity {
                     public void onDismiss(DialogInterface dialog) {
 
                         Log.d("onDismiss", "mensaje de OnDismiss de EditarPersona");
-                        onBackPressed();
+                        PersonaDetalle.this.finish();
+                        PersonaDetalle.this.startActivity(PersonaDetalle.this.getIntent());
+
+//                        onBackPressed();
 //                        Intent _intent = new Intent(PersonaDetalle.this, PersonaDetalle.class);
 //                        _intent.putExtra("nombre", editPeronaListener.get_nombre());
 //                        _intent.putExtra("id", editPeronaListener.get_id());
@@ -256,7 +259,8 @@ public class PersonaDetalle extends AppCompatActivity {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
 
-                        PersonaDetalle.this.onBackPressed();
+                        PersonaDetalle.this.finish();
+                        PersonaDetalle.this.startActivity(PersonaDetalle.this.getIntent());
                     }
                 });
 
