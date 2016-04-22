@@ -204,10 +204,18 @@ public class Principal extends AppCompatActivity
         switch (id) {
             case R.id.eventos:
 
-                item.setChecked(true);
-                setFragment(0);
+                Intent intent = new Intent(this, Principal.class);
+                intent.putExtra("nombre", "Eventos");
+                finish();
+                startActivity(intent);
+
+//                item.setChecked(true);
+//                setFragment(0);
                 break;
             case R.id.personas:
+
+                Intent intentPersonsConEventoRegalo = new Intent(this, PersonaConEventoDetalle.class);
+                startActivity(intentPersonsConEventoRegalo);
 
 //                item.setChecked(true);
 //                setFragment(1);
@@ -238,10 +246,6 @@ public class Principal extends AppCompatActivity
 
         switch (pos){
             case 0:
-
-                Intent intent = new Intent(this, Principal.class);
-                intent.putExtra("nombre", "Eventos");
-                startActivity(intent);
 
 //                fragmentManager = getSupportFragmentManager();
 //                EventoFragment eventoFragment= new EventoFragment(this);

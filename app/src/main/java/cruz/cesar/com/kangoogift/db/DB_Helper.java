@@ -199,6 +199,26 @@ public class DB_Helper extends SQLiteOpenHelper{
         return cursor;
     }
 
+    public Cursor getAllPersonas(SQLiteDatabase db){
+
+        String[] projection = {PersonaDb.FeedEntry.COLUMN_NAME_ID,
+                PersonaDb.FeedEntry.COLUMN_NAME_EVENTO_ID,
+                PersonaDb.FeedEntry.COLUMN_NAME_NOMBRE,
+                PersonaDb.FeedEntry.COLUMN_NAME_FECHA,
+                PersonaDb.FeedEntry.COLUMN_NAME_COMENTARIO};
+
+        Cursor cursor = db.query(PersonaDb.FeedEntry.TABLE_NAME, projection, null,null, null, null, null);
+
+        return cursor;
+    }
+    public int countRegalosWherePersonaId(int regalo_persona_id,SQLiteDatabase db){
+
+        String _id = String.valueOf(regalo_persona_id);
+        Cursor cursorCountRegalo = db.rawQuery("SELECT count(*) FROM regalos WHERE id LIKE " + _id + ";", null);
+        return cursorCountRegalo.getInt(0);
+
+    }
+
     //////////////////////
     //METODOS REGALOS ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////
