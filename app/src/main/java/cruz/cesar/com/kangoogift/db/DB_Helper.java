@@ -211,11 +211,11 @@ public class DB_Helper extends SQLiteOpenHelper{
 
         return cursor;
     }
-    public int countRegalosWherePersonaId(int regalo_persona_id,SQLiteDatabase db){
+    public Cursor countRegalosWherePersonaId(int regalo_persona_id,SQLiteDatabase db){
 
         String _id = String.valueOf(regalo_persona_id);
-        Cursor cursorCountRegalo = db.rawQuery("SELECT count(*) FROM regalos WHERE id LIKE " + _id + ";", null);
-        return cursorCountRegalo.getInt(0);
+        Cursor cursorCountRegalo = db.rawQuery("SELECT count(*) FROM regalos WHERE persona_id LIKE " + _id + ";", null);
+        return cursorCountRegalo;
 
     }
 
