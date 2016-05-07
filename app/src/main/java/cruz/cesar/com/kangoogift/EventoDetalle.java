@@ -100,7 +100,7 @@ public class EventoDetalle extends AppCompatActivity implements EventoFragment.O
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, getIntent().getStringExtra("comentario"), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
