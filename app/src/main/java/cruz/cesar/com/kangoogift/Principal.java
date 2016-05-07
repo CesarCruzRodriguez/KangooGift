@@ -224,7 +224,8 @@ public class Principal extends AppCompatActivity
 
                 break;
             case R.id.lista_resumen:
-
+                    Intent intentLista = new Intent(this, Lista.class);
+                startActivity(intentLista);
                 break;
             case R.id.informacion:
 

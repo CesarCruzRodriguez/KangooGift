@@ -92,6 +92,18 @@ public class DB_Helper extends SQLiteOpenHelper{
 
     }
 
+    public Cursor getAllEventos(SQLiteDatabase db){
+
+        String[] projection = {EventoDb.FeedEntry.COLUMN_NAME_ID,
+                EventoDb.FeedEntry.COLUMN_NAME_NOMBRE,
+                EventoDb.FeedEntry.COLUMN_NAME_FECHA,
+                EventoDb.FeedEntry.COLUMN_NAME_COMENTARIO};
+
+        Cursor cursor = db.query(EventoDb.FeedEntry.TABLE_NAME, projection, null,null, null, null, null);
+
+        return cursor;
+    }
+
     ////////////////
     //BORRAR////////
     ////////////////
@@ -278,5 +290,18 @@ public class DB_Helper extends SQLiteOpenHelper{
 
         db.delete(RegaloDb.FeedEntry.TABLE_NAME, selection, valor);
         Log.d("Database operaciion", "Una fila borrada... de personas");
+    }
+
+    public Cursor getAllRegalos(SQLiteDatabase db){
+
+        String[] projection = {RegaloDb.FeedEntry.COLUMN_NAME_ID,
+                RegaloDb.FeedEntry.COLUMN_NAME_PERSONA_ID,
+                RegaloDb.FeedEntry.COLUMN_NAME_NOMBRE,
+                RegaloDb.FeedEntry.COLUMN_NAME_ESTADO,
+                RegaloDb.FeedEntry.COLUMN_NAME_COMENTARIO};
+
+        Cursor cursor = db.query(RegaloDb.FeedEntry.TABLE_NAME, projection, null,null, null, null, null);
+
+        return cursor;
     }
 }

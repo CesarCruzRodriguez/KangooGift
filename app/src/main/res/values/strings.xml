@@ -37,4 +37,5 @@
     <string name="estado">comprado</string>
     <string name="confirmarBorrarRegalo">¿Desea eliminar este regalo?</string>
     <string name="borrar_regalo">Eliminar regalo</string>
+    <string name="listado_string"></string>
 </resources>

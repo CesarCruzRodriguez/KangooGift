@@ -20,7 +20,7 @@
     <item
         android:id="@+id/add_regalo"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_regalo"
+        android:icon="@drawable/ic_card_giftcard"
         app:showAsAction="always"
         android:title="@string/add_regalo" />
 
